@@ -1,6 +1,6 @@
-const recipes = [
+const data = [
   {
-    id: "1",
+    id: 1,
     name: "Pasta with Tomato Sauce",
     type: "lunch",
     prep: "15 mins",
@@ -29,7 +29,7 @@ const recipes = [
     image: ["imageX", "imageY"],
   },
   {
-    id: "2",
+    id: 2,
     name: "Grilled Chicken Salad",
     type: "lunch",
     prep: "15 mins",
@@ -61,7 +61,7 @@ const recipes = [
     image: ["imageA", "imageB"],
   },
   {
-    id: "3",
+    id: 3,
     name: "Vegetable Stir-Fry",
     type: "dinner",
     prep: "15 mins",
@@ -92,4 +92,4 @@ const recipes = [
   },
 ];
 
-exports.recipes = recipes;
+exports.data = data;

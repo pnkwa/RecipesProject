@@ -91,3 +91,5 @@ const recipes = [
     image: ["imageP", "imageQ"],
   },
 ];
+
+exports.recipes = recipes;

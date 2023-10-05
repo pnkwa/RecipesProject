@@ -137,5 +137,17 @@ router.put("/:id", (req, res) => {
 });
 
 //delete recipe by id
+router.delete("/:id", (req, res) => {
+  const recipeId = Number.parseInt(req.params.id);
+  const recipeIndex = data.findIndex((recipe) => recipe.id === recipeId);
+
+  if (recipeIndex === -1) {
+    return res.status(404).json({ message: "Recipe not found" });
+  }
+
+  data.splice(recipeIndex, 1);
+
+  res.json({ message: "Recipe deleted successfully" });
+});
 
 module.exports = router;

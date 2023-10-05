@@ -25,16 +25,10 @@ router.delete("/:id", (req, res) => {
 });
 
 //get recipes by type
-router.get("/type", (req, res) => {
+router.get("/types/:type", (req, res) => {
   const recipesType = req.params.type;
-  const recipes = data.filter((recipes) => recipes.type === recipesType);
-
-  res.json(recipes);
-});
-
-router.get("/:id", (req, res) => {
-  const recipesId = Number.parseInt(req.params.id);
-  const recipes = data.find((recipes) => recipes.id === recipesId);
+  console.log(recipesType);
+  const recipes = data.filter((recipe) => recipe.type === recipesType);
 
   res.json(recipes);
 });

@@ -25,7 +25,7 @@ const data = [
     ],
     options: ["vegetarian", "gluten-free"],
     level: "medium",
-    video: "How to make Pasta with Tomato Sauce",
+    video: "https://youtu.be/Svk1SwdL1eg?si=5a12QkUC1fYjF7jv",
     image: ["imageX", "imageY"],
   },
   {
@@ -57,7 +57,7 @@ const data = [
     ],
     options: ["low-carb", "gluten-free"],
     level: "easy",
-    video: "Grilled Chicken Salad Recipe",
+    video: "https://youtu.be/v1VUg6r4yFA?si=-uqdaaCdllrPjEwm",
     image: ["imageA", "imageB"],
   },
   {
@@ -87,7 +87,7 @@ const data = [
     ],
     options: ["vegan", "gluten-free"],
     level: "medium",
-    video: "Vegetable Stir-Fry Recipe",
+    video: "https://youtu.be/h8IXBipqYgs?si=Bw6UScJwe25rBxrh",
     image: ["imageP", "imageQ"],
   },
 ];

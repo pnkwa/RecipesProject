@@ -58,22 +58,7 @@ router.post("/", (req, res) => {
 });
 
 //update recipes by id
-router.put("/:id", (req, res) => {
-  const {
-    name,
-    type,
-    prep,
-    cook,
-    serving,
-    ingredients,
-    author,
-    date,
-    details,
-    options,
-    level,
-    video,
-    image,
-  } = req.body;
+router.patch("/:id", (req, res) => {
   const recipeId = Number.parseInt(req.params.id);
   const recipeIndex = data.findIndex((recipe) => recipe.id === recipeId);
 
@@ -85,21 +70,6 @@ router.put("/:id", (req, res) => {
     id: recipeId,
     ...req.body,
   };
-
-  //   recipe.name = name;
-  //   recipe.type = type;
-  //   recipe.prep = prep;
-  //   recipe.cook = cook;
-  //   recipe.serving = serving;
-  //   recipe.ingredients = ingredients;
-  //   recipe.author = author;
-  //   recipe.date = date;
-  //   recipe.details = details;
-  //   recipe.options = options;
-  //   recipe.level = level;
-  //   recipe.video = video;
-  //   recipe.image = image;
-
   res.json(data[recipeIndex]);
 });
 

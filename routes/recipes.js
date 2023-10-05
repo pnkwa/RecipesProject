@@ -8,6 +8,7 @@ router.get("/", (req, res) => {
   const type = req.query.type;
   const options = req.query.options;
   const level = req.query.level;
+  const nameQuery = req.query.name;
 
   // Filter recipes based on query parameters
   // Example URL: http://localhost:3000/recipes?options=vegetarian
@@ -25,7 +26,16 @@ router.get("/", (req, res) => {
   }
   //get recipes by level
   if (level) {
-    filteredRecipes = filteredRecipes.filter((recipe) => recipe.level === level);
+    filteredRecipes = filteredRecipes.filter(
+      (recipe) => recipe.level === level
+    );
+  }
+
+  //get recipes by name
+  if (nameQuery) {
+    filteredRecipes = filteredRecipes.filter((recipe) =>
+      recipe.name.toLowerCase().includes(nameQuery.toLowerCase())
+    );
   }
   // Return all recipes if no query parameters are specified
   res.json(filteredRecipes);
@@ -127,8 +137,5 @@ router.put("/:id", (req, res) => {
 });
 
 //delete recipe by id
-
-
-
 
 module.exports = router;

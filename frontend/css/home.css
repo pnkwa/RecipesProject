@@ -408,7 +408,6 @@ input[type="radio"] {
 .recipes_cards .card .recipe_img {
   width: 180px;
   height: 180px;
-  border-radius: 50%;
   display: flex;
   overflow: hidden;
   justify-content: center;

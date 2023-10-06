@@ -1,17 +1,16 @@
 const express = require("express");
-const morgan = require("morgan");
 const app = express();
+const morgan = require("morgan");
 const recipesRoutes = require("./routes/recipes");
+const commentRoutes = require("./routes/comments");
 
-// Setting up middleware
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Setting up routes
-app.use("/recipes", recipesRoutes);
-
-// Creating a server
 app.listen(3000, () => {
   console.log("Listening on port 3000");
 });
+
+app.use("/recipes", recipesRoutes);
+app.use("/recipes", commentRoutes);

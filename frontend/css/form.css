@@ -300,6 +300,10 @@ header .searchbar input {
 
 }
 
+.container .section_4 label{
+    margin-left: 10px;
+}
+
 .container .section_5 h2{
     margin-bottom: 10px;
 }

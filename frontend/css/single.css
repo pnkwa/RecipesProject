@@ -112,6 +112,17 @@
   }
   /* header */
 
+  .container .recipe_name{
+    background-color: aqua;
+  }
+
+  .category .top_banner{
+    background-color: palevioletred;
+  }
+
+  .category .bottom_banner{
+    background-color: darkred;
+  }
   
 
 

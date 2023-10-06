@@ -4,9 +4,6 @@ const { data } = require("../data");
 
 //get all recipes
 let currentRecipeId = 3;
-router.get("/", (req, res) => {
-  res.send(data);
-});
 
 //get recipes by id
 router.get("/:id", (req, res) => {
@@ -82,44 +79,39 @@ router.delete("/:id", (req, res) => {
   res.sendStatus(204);
 });
 
-//get recipes by type
-router.get("/types/:type", (req, res) => {
-  const recipesType = req.params.type;
-  console.log(recipesType);
-  const recipes = data.filter((recipe) => recipe.type === recipesType);
-
-  res.json(recipes);
-});
-
-//get recipes by options
-router.get("/options/:option", (req, res) => {
-  const recipesOption = req.params.option;
-  console.log(recipesOption);
-  const recipes = data.filter((recipe) =>
-    recipe.options.includes(recipesOption)
-  );
-
-  res.json(recipes);
-});
-
-//get recipes by level
-router.get("/levels/:level", (req, res) => {
-  const recipesLevel = req.params.level;
-  console.log(recipesLevel);
-  const recipes = data.filter((recipe) => recipe.level === recipesLevel);
-
-  res.json(recipes);
-});
-
 //get recipes by search
 router.get("/", (req, res) => {
-  const name = req.query.name;
-  let queryData = data;
-  if (name) {
-    queryData = queryData.filter((recipe) => recipe.name === name);
+  const type = req.query.type;
+  const options = req.query.options;
+  const level = req.query.level;
+
+  // Filter recipes based on query parameters
+  // Example URL: http://localhost:3000/recipes?options=vegetarian
+  let filteredRecipes = data;
+
+  //get recipes by type
+  if (type) {
+    filteredRecipes = filteredRecipes.filter((recipe) => recipe.type === type);
+  }
+  //get recipes by options
+  if (options) {
+    filteredRecipes = filteredRecipes.filter((recipe) =>
+      recipe.options.includes(options)
+    );
+  }
+  //get recipes by level
+  if (level) {
+    filteredRecipes = filteredRecipes.filter(
+      (recipe) => recipe.level === level
+    );
   }
 
-  res.json(queryData);
+  //get recipes by name
+  // if (name) {
+  //   filteredRecipes = filteredRecipes.filter((recipe) => recipe.name === name);
+  // }
+  // Return all recipes if no query parameters are specified
+  res.json(filteredRecipes);
 });
 
 module.exports = router;

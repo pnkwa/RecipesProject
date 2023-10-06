@@ -19,6 +19,10 @@ body {
   background: #f4efdc;
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 header {
   position: fixed;
   z-index: 999;
@@ -149,6 +153,24 @@ header .searchbar input {
 .trailer h2 {
   font-weight: normal;
   padding: 10px;
+}
+
+.trailer a{
+  background-color: #e23c34;
+  border: 1px solid #e23c34;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 30px;
+  width: 150px;
+  color: #fff;
+  transition: 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  font-size: medium;
+}
+.trailer a:hover {
+  background-color: #fdee82;
+  border: 1px solid #e23c34;
+  color: #e23c34;
 }
 
 .container .slideshow {

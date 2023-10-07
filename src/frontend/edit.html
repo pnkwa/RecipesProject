@@ -8,13 +8,14 @@
       src="https://kit.fontawesome.com/4ea8c7073e.js"
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="./css/form.css">
     <title>RecipeBox: Add recipe</title>
   </head>
   <body>
     <header>
       <div class="logo">
         <a href="/">
-          <img src="./images/logo/logo.png" alt="img" />
+          <img src="/public/images/logo/logo.png" alt="img" />
         </a>
       </div>
       <div class="category">
@@ -132,28 +133,22 @@ Share the story behind your recipe and what make it special...</textarea
         <!-- end section_3 -->
         <div class="section_4">
           <div>
-            <div>
+            <div class="selectBox">
               <h2>Prep Time</h2>
               <input type="text" placeholder="0" />
               <label for="preptime">min</label>
-              <select id="preptime" name="preptime">
-                <option value="min">min</option>
-                <option value="hours">hours</option>
-              </select>
+              
             </div>
-            <div>
+            <div class="selectBox">
               <h2>Cook Time</h2>
               <input type="text" placeholder="0" />
               <label for="cooktime">min</label>
-              <select id="cooktime" name="cooktime">
-                <option value="min">min</option>
-                <option value="hours">hours</option>
-              </select>
+              
             </div>
           </div>
 
           <div>
-            <div>
+            <div class="selectBox">
               <h2>Level</h2>
               <label for="level">Select Level</label>
               <select id="level" name="level">
@@ -162,7 +157,7 @@ Share the story behind your recipe and what make it special...</textarea
                 <option value="hard">Hard</option>
               </select>
             </div>
-            <div>
+            <div class="selectBox">
               <h2>Type</h2>
               <label for="recipe-type">Select Type</label>
               <select id="recipe-type" name="type">
@@ -180,11 +175,11 @@ Share the story behind your recipe and what make it special...</textarea
           </div>
 
           <div>
-            <div>
+            <div class="selectBox">
               <h2>Servings</h2>
               <input type="text" placeholder="3" />
             </div>
-            <div>
+            <div class="selectBox">
               <h2>Options</h2>
               <label for="recipe-options">Select Options</label>
               <select id="recipe-options" name="opt">
@@ -202,9 +197,9 @@ Share the story behind your recipe and what make it special...</textarea
           <input type="text" placeholder="Your name " />
         </div>
         <!-- end section_5 -->
-        <div>
-          <button type="submit">Save Recipe</button>
-          <button type="submit">Cancel</button>
+        <div class="section_6">
+          <button class="save-button" type="submit">Save Recipe</button>
+          <button class="cancel-button" type="submit">Cancel</button>
         </div>
       </div>
       <!-- end container -->

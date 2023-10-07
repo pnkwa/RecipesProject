@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Add from "../frontend/add";
 
 import Search from "./Search";
 
@@ -8,13 +9,13 @@ export default function NavBar() {
     <header>
       <div class="logo">
         <Link to="/">
-          <img src="./images/logo/logo.png" alt="img" />
+          <img src="../images/logo/logo.png" alt="img" />
         </Link>
       </div>
       <div class="category">
         <a href="#scoll">Explore</a>
         <a href="/">Trending</a>
-        <a href="/">Create Recipe</a>
+        <Link to="/add">Create Recipe</Link>
       </div>
       <Search />
     </header>

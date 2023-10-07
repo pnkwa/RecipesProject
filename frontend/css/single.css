@@ -113,46 +113,49 @@ header .searchbar input {
 /* header */
 
 .container {
-  background-color: #fff;
+  background-color: #ffffff00;
   margin-top: 100px;
   color: #e23c34;
 }
 
 .container .recipe_name {
-  background-color: aqua;
+  background-color: rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  padding: 50px;
 }
 
-.category .top_banner {
-  background-color: palevioletred;
+.top_banner {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #fff;
 }
 .top_banner .type_cir{
   background-color: #fdee82;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   padding: 10px;
   display: flex;
   align-items: center;
   text-align: center;
   border-radius: 50%;
   position: absolute;
-  top: 210px;
-  right: 75%;
+  top: 250px;
+  right: 70%;
 }
 .top_banner .slideshow {
   height: 500px;
+  width: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   margin: 20px 100px 20px 100px;
+  background-color: rgb(255, 255, 255);
 }
 .top_banner .slideshow img {
   min-width: 100%;
@@ -163,27 +166,253 @@ header .searchbar input {
 }
 
 .bottom_banner {
-  background-color: darkred;
+  background-color: rgb(255, 255, 255);
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #e23c34;
 }
 
 .bottom_banner .time{
-  background-color: rgb(0, 255, 55);
+  background-color: rgb(255, 255, 255);
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 } 
 .time .type_cir {
   background-color: #fdee82;
+  width: 150px;
+  height: 150px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  right: 0px;
+  font-weight: bold;
 }
 .time img {
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 350px;
   object-fit: cover;
   border-radius: 50%;
+  margin: 10px;
+}
+.time_details {
+  display: flex;
+  flex-direction: row;
+}
+.time_details div{
+  background-color: rgb(255, 255, 255);
+  height: 50px;
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+  margin: 10px;
 }
 
 .bottom_banner .ingredients {
-  background-color: aqua;
+  background-color: #fff;
+  width: 350px;
+  margin: 50px;  
+  padding: 10px;
+  border: 3px dashed #e23c34;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.ingredients ol {
+  padding-left: 50px;
+  margin-top: 20px;
+  font-size: large;
+}
+.ingredients h2 {
+  background-color: #fdee82;
+  border-radius: 30px;
+  padding: 5px;
+  text-align: center;
+  width: 60%;
+}
+
+.recipe_details {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-bottom: 50px;
+}
+.recipe_details h2{
+  background-color: #fdee82;
+  border-radius: 30px;
+  padding: 5px;
+  text-align: center;
+  width: 30%;
+}
+
+.recipe_details ol{
+  background-color: rgb(255, 255, 255);
+  margin-top: 20px;
+  padding-left: 50px;
+  width: 700px;
+}
+.recipe_details .editBtn{
+  margin-top: 30px;
+}
+.recipe_details .editBtn button:first-child {
+  background-color: #ffffff;
+  border: 1px solid #e23c34;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 30px;
+  width: 130px;
+  color: #e23c34;
+  transition: 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  font-size: medium;
+}
+.recipe_details .editBtn button{
+  background-color: #e23c34;
+  border: 1px solid #e23c34;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 30px;
+  width: 130px;
+  color: #fff;
+  transition: 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  font-size: medium;
+}
+.recipe_details .editBtn button:hover{
+  background-color: #fdee82;
+  border: 1px solid #e23c34;
+  color: #e23c34;
+}
+
+/*review*/
+.container_review {
+  color: #e23c34;
+
+}
+.container_review .heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.review_box {
+  background: #fff;
+  margin: 0 10px 20px 0;
+  padding: 20px;
+  width: 100%;
+}
+.review_box .name {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  color: #e23c34;
+}
+.review_box .name p {
+  padding-left: 30px;
+  color: #e23c34;
+}
+.review_box .comment {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 20px;
+  margin-top: 5px;
+  font-size: 20px;
+  width: 100%;
+  height: 40px;
+  background-color: #fdee82;
+  border: 1px solid #e23c34;
+  color: #000000;
+}
+.review_box .count {
+  position: absolute;
+  right: 90px;
+  transform: translateY(-90%);
+  font-size: 40px;
+  color: #e23c34;
+  font-weight: bold;
+}
+
+/*comment*/
+.container_comment {
+  color: #e23c34;
+  margin-bottom: 50px;
+}
+.container_comment h2 {
+  margin-bottom: 10px;
+}
+.comment_box {
+  padding: 20px;
+  background-color: #ffffff;
+  padding-bottom: 80px;
+}
+.comment_box .typename {
+  width: 100%;
+  height: 50px;
+  background: #fdee82;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #e23c34;
+}
+.comment_box .typecomment {
+  width: 100%;
+  height: 100px;
+  background: #fdee82;
+  border: 1px solid #e23c34;
+  margin: 20px 0 20px 0;
+  display: flex;
+  padding-top: 20px;
+}
+.comment_box input,
+textarea {
+  background: transparent;
+  width: auto;
+  flex: 1;
+  border: 0;
+  outline: none;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  color: #e23c34;
+  padding-left: 20px;
+}
+.typename ::placeholder {
+  color: #e23c34;
+}
+.comment_box .button {
+  position: absolute;
+  right: 40px;
+  transform: translateY(-80%);
+  margin-top: 50px;
+  margin-right: 18px;
+}
+.comment_box button {
+  background-color: #e23c34;
+  border: 1px solid #e23c34;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 30px;
+  width: 130px;
+  color: #fff;
+  transition: 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  font-size: medium;
+}
+.comment_box button:hover {
+  background-color: #fdee82;
+  border: 1px solid #e23c34;
+  color: #e23c34;
 }
 
 /*footer*/

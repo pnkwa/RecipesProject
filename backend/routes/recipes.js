@@ -59,7 +59,6 @@ router.post("/", async(req, res) => {
     serving,
     ingredients,
     author,
-    date,
     details,
     options,
     level,
@@ -76,7 +75,6 @@ router.post("/", async(req, res) => {
     serving,
     ingredients,
     author,
-    date,
     details,
     options,
     level,
@@ -98,7 +96,6 @@ router.put("/:id", async(req, res) => {
     serving,
     ingredients,
     author,
-    date,
     details,
     options,
     level,
@@ -127,7 +124,6 @@ router.put("/:id", async(req, res) => {
   recipe.serving = serving;
   recipe.ingredients = ingredients;
   recipe.author = author;
-  recipe.date = date;
   recipe.details = details;
   recipe.options = options;
   recipe.level = level;

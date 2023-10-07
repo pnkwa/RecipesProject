@@ -5,7 +5,38 @@ const { data } = require("../data");
 //get all recipes
 let currentRecipeId = 3;
 router.get("/", (req, res) => {
-  res.send(data);
+  const type = req.query.type;
+  const options = req.query.options;
+  const level = req.query.level;
+  const nameQuery = req.query.name;
+  // Filter recipes based on query parameters
+  // Example URL: http://localhost:3000/recipes?options=vegetarian
+  let filteredRecipes = data;
+
+  //get recipes by type
+  if (type) {
+    filteredRecipes = filteredRecipes.filter((recipe) => recipe.type === type);
+  }
+  //get recipes by options
+  if (options) {
+    filteredRecipes = filteredRecipes.filter((recipe) =>
+      recipe.options.includes(options)
+    );
+  }
+  //get recipes by level
+  if (level) {
+    filteredRecipes = filteredRecipes.filter(
+      (recipe) => recipe.level === level
+    );
+  }
+  //get recipes by name
+  if (nameQuery) {
+    filteredRecipes = filteredRecipes.filter((recipe) =>
+      recipe.name.toLowerCase().includes(nameQuery.toLowerCase())
+    );
+  }
+  // Return all recipes if no query parameters are specified
+  res.json(filteredRecipes);
 });
 
 //get recipes by id
@@ -58,7 +89,7 @@ router.post("/", (req, res) => {
 });
 
 //update recipes by id
-router.patch("/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   const recipeId = Number.parseInt(req.params.id);
   const recipeIndex = data.findIndex((recipe) => recipe.id === recipeId);
 
@@ -74,6 +105,16 @@ router.patch("/:id", (req, res) => {
 });
 
 //delete recipe by id
+router.delete("/:id", (req, res) => {
+  const recipeId = Number.parseInt(req.params.id);
+  const recipeIndex = data.findIndex((recipe) => recipe.id === recipeId);
+  if (recipeIndex === -1) {
+    return res.status(404).json({ message: "Recipe not found" });
+  }
+
+  data.splice(recipeIndex, 1);
+  res.json({ message: "Recipe deleted successfully" });
+});
 
 //get recipes by type
 

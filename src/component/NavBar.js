@@ -11,7 +11,7 @@ export default function NavBar() {
           </Link>
         </div>
         <div class="category">
-          <a href="/">Explore</a>
+          <a href="#scoll">Explore</a>
           <a href="/">Trending</a>
           <a href="/">Create Recipe</a>
         </div>

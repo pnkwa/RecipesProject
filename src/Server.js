@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const recipesRoutes = require("./routes/recipes");
-const commentRoutes = require("./routes/comments");
+const recipesRoutes = require("../routes/recipes");
+const commentRoutes = require("../routes/comments");
 
 app.use(morgan("tiny"));
 app.use(express.json());

@@ -1,12 +1,14 @@
 import React from "react";
 import RecipesCard from "../component/recipesCard";
 import Banner from "../component/Banner";
+import Time from "../component/Time";
 
 export default function Home() {
   return (
     <>
       <body>
         <div class="container">
+          {/* Banner Component */}
           <Banner />
 
           <div class="creator">
@@ -43,7 +45,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div class="recipes_lists" id="scoll">
+          <div class="recipes_lists">
             <div class="optionsbar">
               <button type="submit">Spicy</button>
               <button type="submit">Non-spicy</button>
@@ -66,12 +68,8 @@ export default function Home() {
                   <a href="/">Soup</a>
                 </div>
 
-                <div class="time">
-                  <h2>Time</h2>
-                  <p>double range slider html</p>
-                  <p>10 min</p>
-                  <p>40 min</p>
-                </div>
+                {/* Time Component
+                <Time /> */}
 
                 <div class="level">
                   <h2>Level</h2>
@@ -82,15 +80,36 @@ export default function Home() {
                       <p>Hard</p>
                     </div>
                     <div class="icon">
-                      <p>⦿</p>
-                      <p>⦿⦿</p>
-                      <p>⦿⦿⦿</p>
+                      <form action="/">
+                         
+                        <input
+                          type="radio"
+                          id="easy"
+                          name="level"
+                          value="easy"
+                        />
+                        <br />
+                         
+                        <input
+                          type="radio"
+                          id="medium"
+                          name="level"
+                          value="medium"
+                        />
+                        <br /> {""}
+                        <input
+                          type="radio"
+                          id="hard"
+                          name="level"
+                          value="hard"
+                        />
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* RecipesCard */}
+              {/* RecipesCard Component */}
               <RecipesCard />
             </div>
           </div>

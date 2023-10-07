@@ -9,7 +9,7 @@ export default function Banner() {
           "A classic French dish featuring a perfectly cooked steak and crispy
           French fries, often served with a flavorful sauce like Béarnaise."
         </h2>
-        <button type="submit">Check Out</button>
+        <a type="submit">Check Out</a>
       </div>
       <div class="slideshow">
         <img src="./images/recipe/steak.jpg" alt="img" />

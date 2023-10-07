@@ -3,6 +3,14 @@ const app = express();
 const morgan = require("morgan");
 const recipesRoutes = require("./routes/recipes");
 const commentRoutes = require("./routes/comments");
+const { connect, sync } = require("./config/dbRecipes");
+
+async function initalizeDB() {
+  await connect();
+  await sync();
+}
+
+initalizeDB();
 
 app.use(morgan("tiny"));
 app.use(express.json());

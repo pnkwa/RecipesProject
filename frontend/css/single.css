@@ -318,8 +318,21 @@ header .searchbar input {
 .review_box .name {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   font-size: 20px;
   color: #e23c34;
+}
+.review_box i {
+  cursor: pointer;
+  font-size: larger;
+  padding: 5px;
+  transition: 0.3s ease, color 0.3s ease;
+}
+.review_box i:hover {
+  cursor: pointer;
+  font-size: larger;
+  padding: 5px;
+  color: #fdee82;
 }
 .review_box .name p {
   padding-left: 30px;

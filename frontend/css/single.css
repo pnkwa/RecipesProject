@@ -171,7 +171,7 @@ header .searchbar input {
   flex-direction: row;
   justify-content: center;
   padding-bottom: 50px;
-  border-bottom: 1px solid #e23c34;
+  padding-right: 50px;
 }
 
 .bottom_banner .time{
@@ -247,6 +247,8 @@ header .searchbar input {
   padding-top: 50px;
   padding-bottom: 50px;
   margin-bottom: 50px;
+  padding-right: 50px;
+  border-top: 1px solid #e23c34;
 }
 .recipe_details h2{
   background-color: #fdee82;

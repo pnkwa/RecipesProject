@@ -1,14 +1,12 @@
 import NavBar from "./component/NavBar";
-import Home from "./Client/frontend/home";
+// import Home from "./frontend/home.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function App() {
   return (
     <BrowserRouter>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-      </Routes>
+      <Routes>{/* <Route path="/" element={<Home />}></Route> */}</Routes>
     </BrowserRouter>
   );
 }

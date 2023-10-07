@@ -16,8 +16,8 @@ app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.listen(3000, () => {
-  console.log("Listening on port 3000");
+app.listen(8000, () => {
+  console.log("Listening on port 8000");
 });
 
 app.use("/recipes", recipesRoutes);

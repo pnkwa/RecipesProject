@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Card({title, imgURL}) {
-
+function Card({ title, imgURL }) {
   return (
     <div class="card">
       <div class="recipe_img">
@@ -15,3 +14,8 @@ function Card({title, imgURL}) {
 }
 
 export default Card;
+
+Card.propTypes = {
+  title: PropTypes.string.isRequired,
+  imgURL: PropTypes.string.isRequired,
+};

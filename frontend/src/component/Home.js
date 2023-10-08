@@ -7,7 +7,6 @@ import Level from "./Level";
 export default function Home() {
   return (
     <>
-      <body>
         <div class="container">
           {/* Banner Component */}
           <Banner />
@@ -88,7 +87,6 @@ export default function Home() {
             <button type="submit">Request recipe</button>
           </div>
         </div>
-      </body>
     </>
   );
 }

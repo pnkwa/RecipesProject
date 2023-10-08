@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from "react";
 
 function TimeSlider() {
   const sliderRef = useRef(null);
@@ -23,13 +23,17 @@ function TimeSlider() {
         output.innerHTML = this.value;
 
         setSliderValue(this.value);
+        //add api call
       };
     }
   }, []);
 
   return (
     <div className="time">
-      <h2>Time</h2>
+      <label>
+        <h2>Time</h2>
+      </label>
+
       <div className="slider-container">
         <input
           type="range"

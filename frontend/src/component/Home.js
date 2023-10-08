@@ -1,5 +1,5 @@
 import React from "react";
-import RecipesCard from "./RecipesCard";
+import RecipesCard from "./cardlist/RecipesCard";
 import Banner from "./Banner";
 import Time from "./Time";
 import Level from "./Level";

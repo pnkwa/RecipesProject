@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function Card({ title, imgURL }) {
   return (
@@ -8,7 +9,9 @@ function Card({ title, imgURL }) {
         <img src={imgURL} alt="img" />
       </div>
       <p>{title}</p>
-      <button type="submit">Check Out</button>
+      <Link to={`/1`}>
+        <button type="submit">Check Out</button>
+      </Link>
     </div>
   );
 }

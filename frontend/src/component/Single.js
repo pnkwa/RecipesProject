@@ -3,12 +3,50 @@ import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 
 function Single() {
+  const { id } = useParams();
+  const recipeData = [
+    {
+      id: 1,
+  name: "Pasta with Tomato Sauce",
+  type: "lunch",
+  prep: "15 mins",
+  cook: "20 mins",
+  serving: 2,
+  ingredients: [
+    "Pasta",
+    "Tomato sauce",
+    "Garlic",
+    "Onion",
+    "Olive oil",
+    "Basil leaves",
+    "Parmesan cheese",
+  ],
+  author: "chef_cuisine",
+  date: "12:30 pm.",
+  details: [
+    "Boil the pasta in a large pot of salted water until al dente, then drain.",
+    "In a separate pan, heat olive oil and sauté garlic and onion until fragrant.",
+    "Add tomato sauce and basil leaves, simmer for 10 minutes.",
+    "Toss the cooked pasta in the tomato sauce and serve with grated Parmesan cheese.",
+  ],
+  options: ["vegetarian", "gluten-free"],
+  level: "medium",
+  video: "https://youtu.be/Svk1SwdL1eg?si=5a12QkUC1fYjF7jv",
+  image: ["./images/recipe/steak2.jpg", "./images/recipe/steak3.jpg"]  
+    }
+  ]
+  
+
+  //use effect to fetch data
+
+
+
   return (
     <>
- 
+    <div class="container">
       <div class="recipe_name">
-        <p>By takawa</p>
-        <h1>Steak&French fries</h1>
+        <p>By {recipeData.author}</p>
+        <h1>{recipeData.name}</h1>
         <p>Published on September 29, 2023</p>
       </div>
 
@@ -96,7 +134,7 @@ function Single() {
           <button type="submit">Edit Recipe</button>
         </div>
       </div>
-
+      </div>
     </>
   );
 }

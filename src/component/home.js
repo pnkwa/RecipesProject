@@ -1,5 +1,5 @@
 import React from "react";
-import RecipesCard from "../component/recipesCard";
+import RecipesCard from "../component/RecipesCard";
 import Banner from "../component/Banner";
 import Time from "../component/Time";
 
@@ -68,8 +68,8 @@ export default function Home() {
                   <a href="/">Soup</a>
                 </div>
 
-                {/* Time Component
-                <Time /> */}
+                {/* Time Component */}
+                <Time />
 
                 <div class="level">
                   <h2>Level</h2>

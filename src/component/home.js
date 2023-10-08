@@ -1,7 +1,8 @@
 import React from "react";
-import RecipesCard from "../component/RecipesCard";
+import RecipesCard from "../component/CardList/RecipesCard";
 import Banner from "../component/Banner";
 import Time from "../component/Time";
+import Level from "../component/Level";
 
 export default function Home() {
   return (
@@ -71,42 +72,7 @@ export default function Home() {
                 {/* Time Component */}
                 <Time />
 
-                <div class="level">
-                  <h2>Level</h2>
-                  <div class="box">
-                    <div class="string">
-                      <p>Easy</p>
-                      <p>Medium</p>
-                      <p>Hard</p>
-                    </div>
-                    <div class="icon">
-                      <form action="/">
-                         
-                        <input
-                          type="radio"
-                          id="easy"
-                          name="level"
-                          value="easy"
-                        />
-                        <br />
-                         
-                        <input
-                          type="radio"
-                          id="medium"
-                          name="level"
-                          value="medium"
-                        />
-                        <br /> {""}
-                        <input
-                          type="radio"
-                          id="hard"
-                          name="level"
-                          value="hard"
-                        />
-                      </form>
-                    </div>
-                  </div>
-                </div>
+                <Level />
               </div>
 
               {/* RecipesCard Component */}

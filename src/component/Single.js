@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 function Single() {
   const { id } = useParams();
@@ -128,7 +128,9 @@ function Single() {
           </ol>
           <div class="editBtn">
             <button type="submit">Delete Recipe</button>
-            <button type="submit">Edit Recipe</button>
+            <Link to={`/edit`}>
+              <button type="submit">Edit Recipe</button>
+            </Link>
           </div>
         </div>
       </div>

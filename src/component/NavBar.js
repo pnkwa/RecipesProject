@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Add from "../frontend/add";
 
 import Search from "./Search";
 

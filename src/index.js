@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./app";
 import "./frontend/css/home.css";
 import "./frontend/css/form.css";
+import "./frontend/css/notfound.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

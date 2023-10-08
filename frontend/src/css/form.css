@@ -316,7 +316,7 @@ header .searchbar input {
     padding: 10px;
     transition: .3s;
     text-align: center;
-    margin: 10px 0;
+    margin: 10px 10px 0 0;
     cursor: pointer;
 }
 
@@ -349,7 +349,6 @@ header .searchbar input {
 .section_6{
     text-align: right;
 }
-
 
 
 

@@ -24,20 +24,21 @@
         <a href="/">Create Recipe</a>
       </div>
       <form action="" class="searchbar">
-        <input type="text" placeholder="Look for yummy recipes!" />
+        <input type="text" placeholder="Look for your yummy recipes!" />
         <button type="submit">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>
     </header>
 
-    <form action="/submit-recipe" method="POST">
+    <form action="/update-recipe" method="POST">
       <div class="container">
         <div class="top_name">
-          <h1>Add a Recipe</h1>
+          <h1>Edit a Recipe</h1>
           <p>
-            Uploading personal recipes is easy! Add yours to your favorites,
-            share with friends, family, or the Allrecipes community.
+            Editing a recipe allows you to personalize flavors and create
+            culinary masterpieces uniquely tailored to your taste, unlocking a
+            world of culinary creativity and satisfaction.
           </p>
         </div>
         <!-- end top_name -->
@@ -52,7 +53,9 @@
             <div class="desc">
               <h2>Description</h2>
               <div class="typedesc">
-                <textarea id="recipeDescription" placeholder="Share the story behind your recipe and what makes it special..."></textarea>
+                <textarea>
+Share the story behind your recipe and what make it special...</textarea
+                >
               </div>
             </div>
           </div>

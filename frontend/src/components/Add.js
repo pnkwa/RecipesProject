@@ -80,16 +80,50 @@ export default function Add() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate required fields
+    const requiredFields = [
+      "title",
+      "prepTime",
+      "cookTime",
+      "level",
+      "serving",
+      "type",
+      "options",
+      "author",
+    ];
+
+    const emptyFields = requiredFields.filter(field => formData[field].trim() === '');
+
+    if (emptyFields.length > 0) {
+      alert(`Please fill in all required fields: ${emptyFields.join(', ')}`);
+      return;
+    }
+    // Validate Prep Time, Cook Time, and Servings
+    const prepTimeValue = parseFloat(formData.prepTime);
+    const cookTimeValue = parseFloat(formData.cookTime);
+    const servingValue = parseFloat(formData.serving);
+
+    if (isNaN(prepTimeValue) || isNaN(cookTimeValue) || isNaN(servingValue)) {
+      alert("Prep Time, Cook Time, and Servings must be numbers.");
+      return; // Do not proceed with the submission
+    }
+
     try {
-      // Use Axios instead of fetch
-      const response = await Axios.post("http://localhost:8000/recipes", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await Axios.post(
+        "http://localhost:8000/recipes",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.status === 200) {
-        throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
+        throw new Error(
+          `Network response was not ok: ${response.status} - ${response.statusText}`
+        );
       }
 
       const data = response.data;
@@ -133,7 +167,7 @@ export default function Add() {
                 <div class="typephoto1">
                   <input
                     type="text"
-                    name="image1" 
+                    name="image1"
                     placeholder="Add image url"
                     value={formData.image[0]} // Update the value to use an array
                     onChange={handleChange}
@@ -142,7 +176,7 @@ export default function Add() {
                 <div class="typephoto">
                   <input
                     type="text"
-                    name="image2" 
+                    name="image2"
                     placeholder="Add image url"
                     value={formData.image[1]} // Update the value to use an array
                     onChange={handleChange}
@@ -178,7 +212,7 @@ export default function Add() {
                 <input
                   type="text"
                   placeholder="e.g. 2 cups flour"
-                  value={formData.ingredients[index]} 
+                  value={formData.ingredients[index]}
                   onChange={(e) => {
                     const newIngredients = [...formData.ingredients];
                     newIngredients[index] = e.target.value;
@@ -209,14 +243,14 @@ export default function Add() {
               <div key={index} className="typedirec">
                 <p>Step {index + 1}</p>
                 <textarea
-                  value={formData.steps[index]} 
+                  value={formData.steps[index]}
                   onChange={(e) => {
                     const newSteps = [...formData.steps];
                     newSteps[index] = e.target.value;
                     setFormData({
                       ...formData,
                       steps: newSteps,
-                    })
+                    });
                   }}
                 ></textarea>
                 <i className="fa-solid fa-circle-minus"></i>

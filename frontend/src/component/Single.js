@@ -3,45 +3,43 @@ import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import Review from "./comments/Review";
 import Comment from "./comments/Comment";
+import NotFound from "./NotFound";
+import axios from "axios";
 
 function Single() {
   const { id } = useParams();
+  const [recipeData, setRecipeData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const recipeData = {
-    id: 1,
-    name: "Pasta with Tomato Sauce",
-    type: "lunch",
-    prep: 15,
-    cook: 20,
-    serving: 2,
-    ingredients: [
-      "Pasta",
-      "Tomato sauce",
-      "Garlic",
-      "Onion",
-      "Olive oil",
-      "Basil leaves",
-      "Parmesan cheese",
-    ],
-    author: "chef_cuisine",
-    date: "12:30 pm.",
-    details: [
-      "Boil the pasta in a large pot of salted water until al dente, then drain.",
-      "In a separate pan, heat olive oil and sauté garlic and onion until fragrant.",
-      "Add tomato sauce and basil leaves, simmer for 10 minutes.",
-      "Toss the cooked pasta in the tomato sauce and serve with grated Parmesan cheese.",
-    ],
-    options: ["vegetarian", "gluten-free"],
-    level: "medium",
-    video: "https://youtu.be/Svk1SwdL1eg?si=5a12QkUC1fYjF7jv",
-    image: ["./images/recipe/steak2.jpg", "./images/recipe/steak3.jpg"],
-  };
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/recipes/${id}`)
+      .then((response) => {
+        setRecipeData(response.data);
+        setLoading(false); 
+      })
+      .catch((error) => {
+        setError(error); 
+        setLoading(false); 
+      });
+  }, [id]);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return < NotFound />;
+  }
+  if (!recipeData) {
+    return <div>No recipe data available.</div>;
+  }
   const total = recipeData.prep + recipeData.cook;
 
   return (
     <>
       <div className="container">
+      <h1>Debug Message: Component is rendering.</h1>
         <div className="recipe_name">
           <p>By {recipeData.author}</p>
           <h1>{recipeData.name}</h1>

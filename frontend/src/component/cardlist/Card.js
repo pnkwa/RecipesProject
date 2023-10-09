@@ -9,7 +9,7 @@ function Card({ title, imgURL }) {
         <img src={imgURL} alt="img" />
       </div>
       <p>{title}</p>
-      <Link to={`/1`}>
+      <Link to={`/recipes/1`}>
         <button type="submit">Check Out</button>
       </Link>
     </div>

@@ -8,7 +8,7 @@ export default function NavBar() {
     <header>
       <div class="logo">
         <Link to="/">
-          <img src="./images/logo/logo.png" alt="img" />
+          <img src="../images/logo/logo.png" alt="img" />
         </Link>
       </div>
       <div class="category">

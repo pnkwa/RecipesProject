@@ -17,7 +17,7 @@ export default function RecipesCard() {
   ];
 
   return (
-    <div class="recipes_cards" id="scoll">
+    <div className="recipes_cards" id="scoll">
       {cardData.map((card, index) => (
         <Card key={index} title={card.title} imgURL={card.imgURL} />
       ))}

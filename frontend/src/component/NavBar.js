@@ -13,7 +13,6 @@ export default function NavBar() {
       </div>
       <div class="category">
         <a href="#scoll">Explore</a>
-        <a href="/">Trending</a>
         <a href="/">Create Recipe</a>
       </div>
       <Search />

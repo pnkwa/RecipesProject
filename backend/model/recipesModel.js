@@ -1,17 +1,20 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbRecipes");
 Recipes = sequelize.define("Recipes", {
-  name: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  description: {
+    type: DataTypes.STRING,
   },
   type: {
     type: DataTypes.STRING,
   },
-  prep: {
+  prepTime: {
     type: DataTypes.INTEGER, //minutes
   },
-  cook: {
+  cookTime: {
     type: DataTypes.INTEGER, //minutes
   },
   serving: {
@@ -23,11 +26,11 @@ Recipes = sequelize.define("Recipes", {
   author: {
     type: DataTypes.STRING,
   },
-  details: {
+  steps: {
     type: DataTypes.ARRAY(DataTypes.STRING), // Use ARRAY for an array of details
   },
   options: {
-    type: DataTypes.ARRAY(DataTypes.STRING), // Use ARRAY for an array of options
+    type: DataTypes.STRING, 
   },
   level: {
     type: DataTypes.STRING,
@@ -38,6 +41,7 @@ Recipes = sequelize.define("Recipes", {
   image: {
     type: DataTypes.ARRAY(DataTypes.STRING), // Use ARRAY for an array of images
   },
+  
 });
 
 module.exports = Recipes;

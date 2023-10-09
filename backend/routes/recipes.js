@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { data } = require("../data");
 const Recipes = require("../model/recipesModel");
+
 //get all recipes
-let currentRecipeId = 3;
 router.get("/", async (req, res) => {
   const type = req.query.type;
   const options = req.query.options;
   const level = req.query.level;
-  const nameQuery = req.query.name;
+  const title = req.query.title;
   // Filter recipes based on query parameters
   // Example URL: http://localhost:3000/recipes?options=vegetarian
   let recipesList = await Recipes.findAll();
@@ -29,10 +28,10 @@ router.get("/", async (req, res) => {
       (recipe) => recipe.level === level
     );
   }
-  //get recipes by name
-  if (nameQuery) {
+  //get recipes by title
+  if (title) {
     recipesList = recipesList.filter((recipe) =>
-      recipe.name.toLowerCase().includes(nameQuery.toLowerCase())
+      recipe.title.toLowerCase().includes(title.toLowerCase())
     );
   }
   // Return all recipes if no query parameters are specified
@@ -52,14 +51,15 @@ router.get("/:id", async(req, res) => {
 //create recipe
 router.post("/", async(req, res) => {
   const {
-    name,
+    title,
+    description,
     type,
-    prep,
-    cook,
+    prepTime,
+    cookTime,
     serving,
     ingredients,
     author,
-    details,
+    steps,
     options,
     level,
     video,
@@ -68,14 +68,15 @@ router.post("/", async(req, res) => {
 
 
   const recipe = await Recipes.create({
-    name,
+    title,
+    description,
     type,
-    prep,
-    cook,
+    prepTime,
+    cookTime,
     serving,
     ingredients,
     author,
-    details,
+    steps,
     options,
     level,
     video,
@@ -89,18 +90,20 @@ router.post("/", async(req, res) => {
 //update recipes by id
 router.put("/:id", async(req, res) => {
   const {
-    name,
+    title,
+    description,
     type,
-    prep,
-    cook,
+    prepTime,
+    cookTime,
     serving,
     ingredients,
     author,
-    details,
+    steps,
     options,
     level,
     video,
     image,
+
   } = req.body;
 
   const recipe = await Recipes.findOne({
@@ -117,14 +120,15 @@ router.put("/:id", async(req, res) => {
   //   return res.status(404).json({ message: "Recipe not found" });
   // }
 
-  recipe.name = name;
+  recipe.title = title;
+  recipe.description = description
   recipe.type = type;
-  recipe.prep = prep;
-  recipe.cook = cook;
+  recipe.prepTime = prepTime;
+  recipe.cookTime = cookTime;
   recipe.serving = serving;
   recipe.ingredients = ingredients;
   recipe.author = author;
-  recipe.details = details;
+  recipe.steps = steps;
   recipe.options = options;
   recipe.level = level;
   recipe.video = video;

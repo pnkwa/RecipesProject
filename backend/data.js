@@ -88,7 +88,7 @@ const data = [
     options: ["vegan", "gluten-free"],
     level: "medium",
     video: "https://youtu.be/h8IXBipqYgs?si=Bw6UScJwe25rBxrh",
-    image: ["https://www.thecookierookie.com/wp-content/uploads/2023/04/vegetable-stir-fry-recipe-3-edited-768x1024.jpg", "https://therecipecritic.com/wp-content/uploads/2019/08/vegetable_stir_fry.jpg"],
+    image: ["https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/sachas_stir-fry_17077_16x9.jpg", "https://therecipecritic.com/wp-content/uploads/2019/08/vegetable_stir_fry.jpg"],
   },
 ];
 

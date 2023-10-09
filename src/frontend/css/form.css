@@ -164,6 +164,10 @@ header .searchbar input {
     border: 0;
     outline: none;
     resize: none;
+    background-color: #fff;
+}
+.section_1 textarea::placeholder{
+    color: #ababab;
 }
 
 .container .section_1 h2{
@@ -243,10 +247,11 @@ header .searchbar input {
     border: 0;
     outline: none;
     resize: none;
+    background-color: #fff;
 }
 
 .container .section_3 textarea::placeholder {
-    color: transparent;
+    color: #ababab;
 }
 
 .container .section_4{

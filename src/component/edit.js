@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Edit() {
   return (
@@ -168,9 +169,13 @@ export default function Edit() {
           <button class="save-button" type="submit">
             Save Recipe
           </button>
-          <button class="cancel-button" type="submit">
-            Cancel
-          </button>
+
+          {/* Link back to /:id */}
+          <Link to={`/1`}>
+            <button class="cancel-button" type="submit">
+              Cancel
+            </button>
+          </Link>
         </div>
       </div>
     </form>

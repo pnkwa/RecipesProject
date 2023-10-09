@@ -1,138 +1,108 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useParams, Link } from "react-router-dom";
+import Review from "./comments/Review";
+import Comment from "./comments/Comment";
 
 function Single() {
   const { id } = useParams();
-  const recipeData = [
-    {
-      id: 1,
-      name: "Pasta with Tomato Sauce",
-      type: "lunch",
-      prep: "15 mins",
-      cook: "20 mins",
-      serving: 2,
-      ingredients: [
-        "Pasta",
-        "Tomato sauce",
-        "Garlic",
-        "Onion",
-        "Olive oil",
-        "Basil leaves",
-        "Parmesan cheese",
-      ],
-      author: "chef_cuisine",
-      date: "12:30 pm.",
-      details: [
-        "Boil the pasta in a large pot of salted water until al dente, then drain.",
-        "In a separate pan, heat olive oil and sauté garlic and onion until fragrant.",
-        "Add tomato sauce and basil leaves, simmer for 10 minutes.",
-        "Toss the cooked pasta in the tomato sauce and serve with grated Parmesan cheese.",
-      ],
-      options: ["vegetarian", "gluten-free"],
-      level: "medium",
-      video: "https://youtu.be/Svk1SwdL1eg?si=5a12QkUC1fYjF7jv",
-      image: ["./images/recipe/steak2.jpg", "./images/recipe/steak3.jpg"],
-    },
-  ];
 
-  //use effect to fetch data
+  const recipeData = {
+    id: 1,
+    name: "Pasta with Tomato Sauce",
+    type: "lunch",
+    prep: 15,
+    cook: 20,
+    serving: 2,
+    ingredients: [
+      "Pasta",
+      "Tomato sauce",
+      "Garlic",
+      "Onion",
+      "Olive oil",
+      "Basil leaves",
+      "Parmesan cheese",
+    ],
+    author: "chef_cuisine",
+    date: "12:30 pm.",
+    details: [
+      "Boil the pasta in a large pot of salted water until al dente, then drain.",
+      "In a separate pan, heat olive oil and sauté garlic and onion until fragrant.",
+      "Add tomato sauce and basil leaves, simmer for 10 minutes.",
+      "Toss the cooked pasta in the tomato sauce and serve with grated Parmesan cheese.",
+    ],
+    options: ["vegetarian", "gluten-free"],
+    level: "medium",
+    video: "https://youtu.be/Svk1SwdL1eg?si=5a12QkUC1fYjF7jv",
+    image: ["./images/recipe/steak2.jpg", "./images/recipe/steak3.jpg"],
+  };
+
+  const total = recipeData.prep + recipeData.cook;
 
   return (
     <>
-      <div class="container">
-        <div class="recipe_name">
+      <div className="container">
+        <div className="recipe_name">
           <p>By {recipeData.author}</p>
           <h1>{recipeData.name}</h1>
-          <p>Published on September 29, 2023</p>
+          <p>{recipeData.date}</p>
         </div>
 
-        <div class="top_banner">
-          <div class="type_cir">
-            <h3>TYPE Main-course</h3>
+        <div className="top_banner">
+          <div className="type_cir">
+            <h3>TYPE {recipeData.type}</h3>
           </div>
-          <div class="slideshow">
-            <img src="./images/recipe/steak2.jpg" alt="img" />
+          <div className="slideshow">
+            <img src={recipeData.image[0]} alt="img" />
           </div>
         </div>
 
-        <div class="bottom_banner">
-          <div class="time">
-            <div class="type_cir">
-              <p>Cook in 60 mins</p>
+        <div className="bottom_banner">
+          <div className="time">
+            <div className="type_cir">
+              <p>Cook in {total} mins</p>
             </div>
-            <img src="./images/recipe/steak3.jpg" alt="img" />
-            <div class="time_details">
+            <img src={recipeData.image[1]} alt="img" />
+            <div className="time_details">
               <div>
-                <p>Prep time 10 mins</p>
+                <p>Prep time {recipeData.prep} mins</p>
               </div>
               <div>
-                <p>Cook time 50 mins</p>
+                <p>Cook time {recipeData.cook} mins</p>
               </div>
               <div>
-                <p>Serving 6-8 serving</p>
+                <p>Serving {recipeData.serving} serving</p>
               </div>
             </div>
           </div>
 
-          <div class="ingredients">
+          <div className="ingredients">
             <h2>Ingredients</h2>
             <ol>
-              <li>Steak (e.g., ribeye, sirloin, filet mignon)</li>
-              <li>Olive oil</li>
-              <li>Salt</li>
-              <li>Black pepper</li>
-              <li>Garlic cloves (optional)</li>
-              <li>Fresh rosemary (optional)</li>
-              <li>Butter (optional)</li>
-              <li>Thyme (optional)</li>
+              {recipeData.ingredients.map((ingredient, index) => (
+                <li key={index}>{ingredient}</li>
+              ))}
             </ol>
           </div>
         </div>
 
-        <div class="recipe_details">
+        <div className="recipe_details">
           <h2>How To : Step by step</h2>
           <ol>
-            <li>
-              Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametLorem ipsum
-              dolor sit amet
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametLorem ipsum
-              dolor sit amet
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametLorem ipsum
-              dolor sit amet
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametLorem ipsum
-              dolor sit amet
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametLorem ipsum
-              dolor sit ametLorem ipsum dolor s
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametvLorem ipsum
-              dolor sit amet
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametvLorem ipsum
-              dolor sit amet
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametLorem ipsum
-              dolor sit ametLorem ipsum dolor sit amet
-            </li>
+            {recipeData.details.map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
+            ))}
           </ol>
-          <div class="editBtn">
+          <div className="editBtn">
             <button type="submit">Delete Recipe</button>
             <Link to={`/edit`}>
               <button type="submit">Edit Recipe</button>
             </Link>
+            ;
           </div>
         </div>
+        <Review />
+        <Comment />
       </div>
     </>
   );

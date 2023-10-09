@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-function Card({ key, title, imgURL }) {
+function Card({ title, imgURL }) {
   return (
-    <div class="card">
-      <div class="recipe_img">
+    <div className="card">
+      <div className="recipe_img">
         <img src={imgURL} alt="img" />
       </div>
       <p>{title}</p>

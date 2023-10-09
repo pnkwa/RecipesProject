@@ -1,4 +1,7 @@
+import { element } from "prop-types";
 import React from "react";
+import { Link } from "react-router-dom";
+import Home from "./Home";
 
 export default function Add() {
   return (
@@ -85,7 +88,7 @@ export default function Add() {
           <h3>Enter dirctions below</h3>
           <div class="typedirec">
             <p>Step1</p>
-            <textarea>e.g. Reheat oven at 30 degrees F...</textarea>
+            <textarea placeholder="e.g. Reheat oven at 30 degrees F..."></textarea>
             <i class="fa-solid fa-circle-minus"></i>
           </div>
           <div class="typedirec">
@@ -170,9 +173,11 @@ export default function Add() {
           <button class="save-button" type="submit">
             Save Recipe
           </button>
-          <button class="cancel-button" type="submit">
-            Cancel
-          </button>
+          <Link to={"/"}>
+            <button class="cancel-button" type="submit">
+              Cancel
+            </button>
+          </Link>
         </div>
       </div>
     </form>

@@ -3,8 +3,8 @@ const data = [
     id: 1,
     name: "Pasta with Tomato Sauce",
     type: "lunch",
-    prep: "15 mins",
-    cook: "20 mins",
+    prep: 15,
+    cook: 20,
     serving: 2,
     ingredients: [
       "Pasta",
@@ -26,14 +26,17 @@ const data = [
     options: ["vegetarian", "gluten-free"],
     level: "medium",
     video: "https://youtu.be/Svk1SwdL1eg?si=5a12QkUC1fYjF7jv",
-    image: ["imageX", "imageY"],
+    image: [
+      "https://images.food52.com/-jxHBleXv6CRl_mIZfO_bUzeK_Q=/660x440/filters:format(webp)/52096452-f9c1-49e9-9e76-46c694bee2ba--2020-1124_steak-frites_3x2_rocky-luten_032.jpg",
+      "https://i.pinimg.com/564x/b1/09/13/b109139e11d81e23dc2fcc02d8c465d3.jpg",
+    ],
   },
   {
     id: 2,
     name: "Grilled Chicken Salad",
     type: "lunch",
-    prep: "15 mins",
-    cook: "15 mins",
+    prep: 15,
+    cook: 15,
     serving: 2,
     ingredients: [
       "Chicken breasts",
@@ -58,14 +61,17 @@ const data = [
     options: ["low-carb", "gluten-free"],
     level: "easy",
     video: "https://youtu.be/v1VUg6r4yFA?si=-uqdaaCdllrPjEwm",
-    image: ["imageA", "imageB"],
+    image: [
+      "https://www.eatwell101.com/wp-content/uploads/2023/06/heathy-grilled-chicken-salad.jpg",
+      "https://cdn.healthyrecipes101.com/recipes/images/chickens/grilled-chicken-salad-dressing-claxsgf9l0018321b6egb53br.webp?w=1080&q=80",
+    ],
   },
   {
     id: 3,
     name: "Vegetable Stir-Fry",
     type: "dinner",
-    prep: "15 mins",
-    cook: "10 mins",
+    prep: 15,
+    cook: 10,
     serving: 4,
     ingredients: [
       "Mixed vegetables",
@@ -88,7 +94,10 @@ const data = [
     options: ["vegan", "gluten-free"],
     level: "medium",
     video: "https://youtu.be/h8IXBipqYgs?si=Bw6UScJwe25rBxrh",
-    image: ["imageP", "imageQ"],
+    image: [
+      "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/sachas_stir-fry_17077_16x9.jpg",
+      "https://therecipecritic.com/wp-content/uploads/2019/08/vegetable_stir_fry.jpg",
+    ],
   },
 ];
 

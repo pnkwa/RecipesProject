@@ -14,10 +14,10 @@ export default function App() {
       <NavBar />
       <Container />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/recipes" element={<Home />}></Route>
         <Route path="/add" element={<Add />}></Route>
-        <Route path="/edit" element={<Edit />}></Route>
-        <Route path="/1" element={<Single />}></Route>
+        <Route path="/edit/:id" element={<Edit />}></Route>
+        <Route path="/recipes/:id" element={<Single />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <Footer />

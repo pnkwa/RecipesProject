@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-function Card({ title, imgURL }) {
+function Card({ recipeData }) {
   return (
     <div className="card">
       <div className="recipe_img">
-        <img src={imgURL} alt="img" />
+        <img src={recipeData.image[0]} alt="img" />
       </div>
-      <p>{title}</p>
-      <Link to={`/1`}>
+      <p>{recipeData.name}</p>
+      <Link to={`/recipes/${recipeData.id}`}>
         <button type="submit">Check Out</button>
       </Link>
     </div>
@@ -19,6 +19,5 @@ function Card({ title, imgURL }) {
 export default Card;
 
 Card.propTypes = {
-  title: PropTypes.string.isRequired,
-  imgURL: PropTypes.string.isRequired,
+  recipeData: PropTypes.object.isRequired,
 };

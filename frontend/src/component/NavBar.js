@@ -7,13 +7,13 @@ export default function NavBar() {
   return (
     <header>
       <div class="logo">
-        <Link to="/">
+        <Link to="/recipes">
           <img src="../images/logo/logo.png" alt="img" />
         </Link>
       </div>
       <div class="category">
         <a href="#scoll">Explore</a>
-        <a href="/">Create Recipe</a>
+        <Link to={"/add"}>Create Recipe</Link>
       </div>
       <Search />
     </header>

@@ -15,7 +15,7 @@ export default function Home() {
             <div class="cards">
               <div class="owner">
                 <div class="ownerimg">
-                  <img src="./images/owner/KwanJai.jpg" alt="img" />
+                  <img src="../images/owner/KwanJai.jpg" alt="img" />
                 </div>
                 <div class="ownerdetails">
                   <h3>Kittipat Saiud</h3>
@@ -25,7 +25,7 @@ export default function Home() {
 
               <div class="owner">
                 <div class="ownerimg">
-                  <img src="./images/owner/Lugie.jpg" alt="img" />
+                  <img src="../images/owner/Lugie.jpg" alt="img" />
                 </div>
                 <div class="ownerdetails">
                   <h3>Luca Gomis</h3>
@@ -35,7 +35,7 @@ export default function Home() {
 
               <div class="owner">
                 <div class="ownerimg">
-                  <img src="./images/owner/KwaKwa.jpg" alt="img" />
+                  <img src="../images/owner/KwaKwa.jpg" alt="img" />
                 </div>
                 <div class="ownerdetails">
                   <h3>Prapanit Pajeekum</h3>

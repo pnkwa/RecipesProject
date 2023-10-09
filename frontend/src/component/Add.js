@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Add() {
   return (
@@ -170,9 +171,11 @@ export default function Add() {
           <button class="save-button" type="submit">
             Save Recipe
           </button>
-          <button class="cancel-button" type="submit">
-            Cancel
-          </button>
+          <Link to={"/recipes"}>
+            <button class="cancel-button" type="submit">
+              Cancel
+            </button>
+          </Link>
         </div>
       </div>
     </form>

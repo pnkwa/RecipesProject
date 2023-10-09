@@ -1,6 +1,8 @@
 import React from "react";
+import { useParams, Link } from "react-router-dom";
 
 export default function Edit() {
+  const { id } = useParams();
   return (
     <form action="/update-recipe" method="POST">
       <div class="container">
@@ -168,9 +170,12 @@ export default function Edit() {
           <button class="save-button" type="submit">
             Save Recipe
           </button>
-          <button class="cancel-button" type="submit">
-            Cancel
-          </button>
+          {/* Link back to /:id */}
+          <Link to={`/recipes/${id}`}>
+            <button class="cancel-button" type="submit">
+              Cancel
+            </button>
+          </Link>
         </div>
       </div>
     </form>

@@ -12,7 +12,7 @@ export default function Banner() {
         <a type="submit">Check Out</a>
       </div>
       <div class="slideshow">
-        <img src="./images/recipe/steak.jpg" alt="img" />
+        <img src="../images/recipe/steak.jpg" alt="img" />
       </div>
     </div>
   );

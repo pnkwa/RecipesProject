@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Review from "./comments/Review";
 import Comment from "./comments/Comment";
 import NotFound from "./NotFound";
@@ -93,7 +93,9 @@ function Single() {
           </ol>
           <div className="editBtn">
             <button type="submit">Delete Recipe</button>
-            <button type="submit">Edit Recipe</button>
+            <Link to={`/edit/${id}`}>
+              <button type="submit">Edit Recipe</button>
+            </Link>
           </div>
         </div>
         <Review idRecipe={id}/>

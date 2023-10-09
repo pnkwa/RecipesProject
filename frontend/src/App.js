@@ -16,7 +16,7 @@ export default function App() {
       <Routes>
       <Route path="/recipes" element={<Home />}></Route>
         <Route path="/add" element={<Add />}></Route>
-        <Route path="/edit" element={<Edit />}></Route>
+        <Route path="/edit/:id" element={<Edit />}></Route>
         <Route path="/recipes/:id" element={<Single />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

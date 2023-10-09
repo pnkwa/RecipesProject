@@ -1,7 +1,7 @@
 const {Sequelize} = require('sequelize');
 
 const sequelize = new Sequelize(
-    "recipes", // database
+    "recipes-database", // database
     "postgres", // username
     "123456", // password
     {

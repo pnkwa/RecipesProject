@@ -21,11 +21,10 @@ export default function Add() {
 
   const [formData, setFormData] = useState({
     title: "",
-    description: [""],
     image: [""],
     video: "",
-    ingredients: [], 
-    steps: [],       
+    ingredients: [],
+    steps: [],
     prepTime: "",
     cookTime: "",
     level: "easy",
@@ -34,7 +33,6 @@ export default function Add() {
     options: "nonspicy",
     author: "",
   });
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,34 +77,28 @@ export default function Add() {
       });
     }
   };
-  
-
-  console.log(steps)
-  console.log(ingredients)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/recipes", {
-        method: "POST",
+      // Use Axios instead of fetch
+      const response = await Axios.post("http://localhost:8000/recipes", formData, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
-  
-      if (!response.ok) {
+
+      if (!response.status === 200) {
         throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
       }
-  
-      const data = await response.json();
+
+      const data = response.data;
       console.log("Recipe saved:", data);
       setIsSuccess(true);
     } catch (error) {
       console.error("Error saving recipe:", error);
     }
   };
-  
 
   return (
     <>
@@ -134,18 +126,6 @@ export default function Add() {
                   />
                 </div>
               </div>
-              <div class="desc">
-                <h2>Description</h2>
-                <div class="typedesc">
-                  <textarea
-                    id="recipeDescription"
-                    name="description"
-                    placeholder="Share the story behind your recipe and what makes it special..."
-                    value={formData.description}
-                    onChange={handleChange}
-                  ></textarea>
-                </div>
-              </div>
             </div>
             <div>
               <div class="photo">
@@ -153,7 +133,7 @@ export default function Add() {
                 <div class="typephoto1">
                   <input
                     type="text"
-                    name="image1" // Change the name to "image1"
+                    name="image1" 
                     placeholder="Add image url"
                     value={formData.image[0]} // Update the value to use an array
                     onChange={handleChange}
@@ -162,7 +142,7 @@ export default function Add() {
                 <div class="typephoto">
                   <input
                     type="text"
-                    name="image2" // Change the name to "image2"
+                    name="image2" 
                     placeholder="Add image url"
                     value={formData.image[1]} // Update the value to use an array
                     onChange={handleChange}
@@ -198,16 +178,20 @@ export default function Add() {
                 <input
                   type="text"
                   placeholder="e.g. 2 cups flour"
-                  value={ingredient}
+                  value={formData.ingredients[index]} 
                   onChange={(e) => {
-                    const newIngredients = [...ingredients];
+                    const newIngredients = [...formData.ingredients];
                     newIngredients[index] = e.target.value;
-                    setIngredients(newIngredients);
+                    setFormData({
+                      ...formData,
+                      ingredients: newIngredients,
+                    });
                   }}
                 />
                 <i className="fa-solid fa-circle-minus"></i>
               </div>
             ))}
+
             <button type="button" onClick={handleAddIngredient}>
               +Add Ingredient
             </button>
@@ -225,11 +209,14 @@ export default function Add() {
               <div key={index} className="typedirec">
                 <p>Step {index + 1}</p>
                 <textarea
-                  value={step}
+                  value={formData.steps[index]} 
                   onChange={(e) => {
-                    const newSteps = [...steps];
+                    const newSteps = [...formData.steps];
                     newSteps[index] = e.target.value;
-                    setSteps(newSteps);
+                    setFormData({
+                      ...formData,
+                      steps: newSteps,
+                    })
                   }}
                 ></textarea>
                 <i className="fa-solid fa-circle-minus"></i>
@@ -344,7 +331,7 @@ export default function Add() {
             <button class="save-button" type="submit">
               Save Recipe
             </button>
-            <button class="cancel-button" type="reset">
+            <button class="cancel-button" type="button">
               Cancel {/* Use type="reset" to reset the form */}
             </button>
           </div>

@@ -96,7 +96,7 @@ function Single() {
             <button type="submit">Edit Recipe</button>
           </div>
         </div>
-        <Review />
+        <Review idRecipe={id}/>
         <Comment />
       </div>
     </>

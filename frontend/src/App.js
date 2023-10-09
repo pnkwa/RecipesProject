@@ -14,7 +14,7 @@ export default function App() {
       <NavBar />
       <Container />
       <Routes>
-      <Route path="/recipes" element={<Home />}></Route>
+      <Route path="/" element={<Home />}></Route>
         <Route path="/add" element={<Add />}></Route>
         <Route path="/edit/:id" element={<Edit />}></Route>
         <Route path="/recipes/:id" element={<Single />}></Route>

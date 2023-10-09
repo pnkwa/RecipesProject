@@ -171,7 +171,7 @@ export default function Add() {
           <button class="save-button" type="submit">
             Save Recipe
           </button>
-          <Link to={"/recipes"}>
+          <Link to={"/"}>
             <button class="cancel-button" type="submit">
               Cancel
             </button>

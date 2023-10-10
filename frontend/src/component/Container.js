@@ -9,4 +9,5 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,
 };
- export default Container;
+
+export default Container;

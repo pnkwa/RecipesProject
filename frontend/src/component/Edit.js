@@ -1,9 +1,12 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
-export default function Edit() {
+function Edit({ className }) {
   const { id } = useParams();
   return (
+    <div className={className}>
     <form action="/update-recipe" method="POST">
       <div class="container">
         <div class="top_name">
@@ -179,5 +182,260 @@ export default function Edit() {
         </div>
       </div>
     </form>
+    </div>
   );
 }
+
+Edit.propTypes = {
+  className: PropTypes.string.isRequired,
+};
+
+export default styled(Edit)`
+.container{
+  margin: 0 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.container .top_name {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 130px 130px 0 130px;
+  color: #e23c34;
+  
+}
+
+.container .section_1 {
+  margin-top: 20px;
+  padding: 20px 0;
+  border-top: #e23c34 1px solid;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+  color: #e23c34;
+
+}
+
+.container .section_1 input{
+  width: 500px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 0;
+  outline: none;
+}
+
+.container .section_1 input::placeholder{
+  color: #ababab;
+}
+
+.container .section_1 textarea{
+  width: 500px;
+  height: 80px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 0;
+  outline: none;
+  resize: none;
+  background-color: #fff;
+}
+.section_3 textarea::placeholder{
+  color: #ababab;
+  font-family: "Inter", sans-serif;;
+}
+
+.container .section_1 h2{
+  margin: 10px 0;
+}
+
+.container .section_1 textarea::placeholder {
+  color: transparent;
+}
+
+.container .section_2, 
+.container .section_3, 
+.container .section_4,
+.container .section_5 {
+  margin-top: 20px;
+  padding: 20px 0;
+  border-top: #e23c34 1px solid;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+  color: #e23c34;
+}
+
+.container .section_2 input, .container .section_5 input{
+  width: 500px;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  border: 0;
+  outline: none;
+
+}
+
+.container .section_2 input::placeholder, .container .section_5 input::placeholder{
+  color: #ababab;
+}
+
+.container .section_2 .typeingre, .typedirec{
+  display: flex;
+  align-items: center;
+}
+.container .section_2 .typeingre i, .typedirec i{ 
+  color: #ababab
+}
+
+.container .section_2 .typeingre i:hover, .typedirec i:hover{ 
+  cursor: pointer;
+  color: #6b6b6b;
+  transition: all ease 0.5s;
+}
+
+.container .section_2 button, .container .section_3 button{
+  background-color: #e23c34;
+  color: #fff;
+  border: #e23c34 2px solid;
+  border-radius: 100px;
+  padding: 10px;
+  transition: .3s;
+  text-align: center;
+  margin: 10px 0;
+  width: 15%;
+}
+
+.container .section_2 button:hover, .container .section_3 button:hover{
+  background-color: #fdee82;
+  color: #e23c34;
+  border: #e23c34 2px solid;
+  border-radius: 100px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.container .section_2 h2, h3{
+  margin: 10px 0;
+}
+
+.container .section_3 textarea{
+  width: 500px;
+  height: 80px;
+  padding: 10px;
+  margin: 10px;
+  border: 0;
+  outline: none;
+  resize: none;
+  background-color: #fff;
+}
+
+.container .section_3 textarea::placeholder {
+  color: #ababab;
+}
+
+.container .section_4{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container .section_4 .selectBox{
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.container .section_4 .selectBox input{
+  width: 50px;
+  height: 30px;
+  margin: 10px;
+  border: 0;
+  text-align: center;
+  outline: none;
+}
+
+.container .section_4 .selectBox input::placeholder{
+  color: #ababab;
+  cursor: pointer;
+}
+
+.container .section_4 .selectBox select{
+  width: 150px;
+  height: 30px;
+  margin: 10px;
+  border: 0;
+  outline: none;
+  border: #fff 2px solid;
+  cursor: pointer;
+}
+
+.container .section_4 .selectBox select:hover {
+  background-color: #fff;
+  color: #e23c34;
+  border: #e23c34 2px solid;
+  transition: .3s;
+}
+
+.container .section_4 .selectBox select option {
+  background-color: #ffffff;
+  color: #333;
+  padding: 5px;
+  outline: none;
+
+}
+
+.container .section_4 label{
+  margin-left: 10px;
+}
+
+.container .section_5 h2{
+  margin-bottom: 10px;
+}
+
+.section_6 .cancel-button{
+  background-color: #fff;
+  color: #e23c34;
+  border: #e23c34 2px solid;
+  border-radius: 100px;
+  padding: 10px;
+  transition: .3s;
+  text-align: center;
+  margin: 10px 0;
+  cursor: pointer;
+  width: 150px;
+}
+
+.section_6 .cancel-button:hover{
+  background-color: #fdee82;
+  color: #e23c34;
+  border: #e23c34 2px solid;
+  border-radius: 100px;
+}
+
+.section_6 .save-button{
+  background-color: #e23c34;
+  color: #fff;
+  border: #e23c34 2px solid;
+  border-radius: 100px;
+  padding: 10px;
+  transition: .3s;
+  text-align: center;
+  margin-left: 10px;
+  cursor: pointer;
+  width: 150px;
+}
+
+.section_6 .save-button:hover{
+  background-color: #fdee82;
+  color: #e23c34;
+  border: #e23c34 2px solid;
+  border-radius: 100px;
+}
+
+.section_6{
+  text-align: right;
+}
+`;

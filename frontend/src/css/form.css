@@ -115,13 +115,12 @@ header .searchbar input {
 }
 
 /*------------------------------ form --------------------------------*/
-.container {
+.container{
     margin: 0 10%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-
 .container .top_name {
     display: flex;
     justify-content: center;
@@ -130,7 +129,7 @@ header .searchbar input {
     text-align: center;
     margin: 130px 130px 0 130px;
     color: #e23c34;
-
+    
 }
 
 .container .section_1 {
@@ -145,7 +144,7 @@ header .searchbar input {
 
 }
 
-.container .section_1 input {
+.container .section_1 input{
     width: 500px;
     padding: 10px;
     margin-bottom: 10px;
@@ -153,11 +152,11 @@ header .searchbar input {
     outline: none;
 }
 
-.container .section_1 input::placeholder {
+.container .section_1 input::placeholder{
     color: #ababab;
 }
 
-.container .section_1 textarea {
+.container .section_1 textarea{
     width: 500px;
     height: 80px;
     padding: 10px;
@@ -165,9 +164,13 @@ header .searchbar input {
     border: 0;
     outline: none;
     resize: none;
+    background-color: #fff;
+}
+.section_1 textarea::placeholder{
+    color: #ababab;
 }
 
-.container .section_1 h2 {
+.container .section_1 h2{
     margin: 10px 0;
 }
 
@@ -175,8 +178,8 @@ header .searchbar input {
     color: transparent;
 }
 
-.container .section_2,
-.container .section_3,
+.container .section_2, 
+.container .section_3, 
 .container .section_4,
 .container .section_5 {
     margin-top: 20px;
@@ -188,8 +191,7 @@ header .searchbar input {
     color: #e23c34;
 }
 
-.container .section_2 input,
-.container .section_5 input {
+.container .section_2 input, .container .section_5 input{
     width: 500px;
     padding: 10px;
     margin-bottom: 10px;
@@ -199,24 +201,20 @@ header .searchbar input {
 
 }
 
-.container .section_2 input::placeholder,
-.container .section_5 input::placeholder {
+.container .section_2 input::placeholder, .container .section_5 input::placeholder{
     color: #ababab;
 }
 
-.container .section_2 .typeingre,
-.typedirec {
+.container .section_2 .typeingre, .typedirec{
     display: flex;
     align-items: center;
 }
 
-.container .section_2 .typeingre i,
-.typedirec i {
+.container .section_2 .typeingre i, .typedirec i{ 
     color: #ababab
 }
 
-.container .section_2 button,
-.container .section_3 button {
+.container .section_2 button, .container .section_3 button{
     background-color: #e23c34;
     color: #fff;
     border: #e23c34 2px solid;
@@ -228,8 +226,7 @@ header .searchbar input {
     width: 15%;
 }
 
-.container .section_2 button:hover,
-.container .section_3 button:hover {
+.container .section_2 button:hover, .container .section_3 button:hover{
     background-color: #fdee82;
     color: #e23c34;
     border: #e23c34 2px solid;
@@ -238,12 +235,11 @@ header .searchbar input {
     cursor: pointer;
 }
 
-.container .section_2 h2,
-h3 {
+.container .section_2 h2, h3{
     margin: 10px 0;
 }
 
-.container .section_3 textarea {
+.container .section_3 textarea{
     width: 500px;
     height: 80px;
     padding: 10px;
@@ -251,25 +247,26 @@ h3 {
     border: 0;
     outline: none;
     resize: none;
+    background-color: #fff;
 }
 
 .container .section_3 textarea::placeholder {
-    color: transparent;
+    color: #ababab;
 }
 
-.container .section_4 {
+.container .section_4{
     display: flex;
     flex-wrap: wrap;
 }
 
-.container .section_4 .selectBox {
+.container .section_4 .selectBox{
     display: flex;
     align-items: center;
     margin-right: 20px;
     margin-bottom: 20px;
 }
 
-.container .section_4 .selectBox input {
+.container .section_4 .selectBox input{
     width: 50px;
     height: 30px;
     margin: 10px;
@@ -278,12 +275,12 @@ h3 {
     outline: none;
 }
 
-.container .section_4 .selectBox input::placeholder {
+.container .section_4 .selectBox input::placeholder{
     color: #ababab;
     cursor: pointer;
 }
 
-.container .section_4 .selectBox select {
+.container .section_4 .selectBox select{
     width: 150px;
     height: 30px;
     margin: 10px;
@@ -308,15 +305,15 @@ h3 {
 
 }
 
-.container .section_4 label {
+.container .section_4 label{
     margin-left: 10px;
 }
 
-.container .section_5 h2 {
+.container .section_5 h2{
     margin-bottom: 10px;
 }
 
-.section_6 .save-button {
+.section_6 .save-button{
     background-color: #fff;
     color: #e23c34;
     border: #e23c34 2px solid;
@@ -324,18 +321,18 @@ h3 {
     padding: 10px;
     transition: .3s;
     text-align: center;
-    margin: 10px 10px 0 0;
+    margin: 10px 0;
     cursor: pointer;
 }
 
-.section_6 .save-button:hover {
+.section_6 .save-button:hover{
     background-color: #fdee82;
     color: #e23c34;
     border: #e23c34 2px solid;
     border-radius: 100px;
 }
 
-.section_6 .cancel-button {
+.section_6 .cancel-button{
     background-color: #e23c34;
     color: #fff;
     border: #e23c34 2px solid;
@@ -347,23 +344,13 @@ h3 {
     cursor: pointer;
 }
 
-.section_6 .cancel-button:hover {
+.section_6 .cancel-button:hover{
     background-color: #fdee82;
     color: #e23c34;
     border: #e23c34 2px solid;
     border-radius: 100px;
 }
 
-.section_6 {
+.section_6{
     text-align: right;
-}
-
-
-.success-message {
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin-top: 10px;
-    display: block;
 }

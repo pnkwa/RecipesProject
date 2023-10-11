@@ -1,13 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
-function Add({ className }) {
+function Edit({ className }) {
+  const { id } = useParams();
+
   const [ingredients, setIngredients] = useState(["", "", ""]);
   const [steps, setSteps] = useState(["", "", ""]);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [recipeData, setRecipeData] = useState({
+    title: "",
+    image: ["", ""],
+    video: "",
+    ingredients: ["", "", ""],
+    steps: ["", "", ""],
+    prepTime: "",
+    cookTime: "",
+    level: "easy",
+    serving: "",
+    type: "breakfast",
+    options: "",
+    author: "",
+  });
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Function to add a new ingredient field
   const handleAddIngredient = () => {
@@ -31,6 +51,31 @@ function Add({ className }) {
     const newSteps = [...steps];
     newSteps.splice(newSteps.length - 1, 1);
     setSteps(newSteps);
+  };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/recipes/${id}`)
+      .then((response) => {
+        setRecipeData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, [id]);
+
+  const handleUpdate = (e) => {
+    axios
+      .put(`http://localhost:8000/recipes/${id}`, {
+        ...recipeData,
+        [e.target.name]: e.target.value,
+      })
+      .then((response) => {
+        console.log("Recipe updated:", response.data);
+        window.location.href = `/recipes/${id}`;
+      });
   };
 
   const [formData, setFormData] = useState({
@@ -154,28 +199,25 @@ function Add({ className }) {
     <div className={className}>
       <form onSubmit={handleSubmit}>
         <div className="container">
-          <div className="top_name">
-            <h1>Add a Recipe</h1>
+          <div class="top_name">
+            <h1>Edit a Recipe</h1>
             <p>
-              Uploading personal recipes is easy! Add yours to your favorites,
-              share with friends, family, or the Allrecipes community.
+              Editing a recipe allows you to personalize flavors and create
+              culinary masterpieces uniquely tailored to your taste, unlocking a
+              world of culinary creativity and satisfaction.
             </p>
           </div>
 
           <div className="section_1">
             <div>
-              <div className="title">
-                <h2>Recipe Title</h2>
-                <div className="typetitle">
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="Give your recipe a title"
-                    value={formData.title}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
+              <h2>Recipe Title</h2>
+              <input
+                type="text"
+                name="title"
+                value={recipeData ? recipeData.title : ""}
+                placeholder="Give your recipe a title"
+                onChange={handleUpdate}
+              />
             </div>
             <div>
               <div className="photo">
@@ -185,8 +227,8 @@ function Add({ className }) {
                     type="text"
                     name="image1"
                     placeholder="Add image url"
-                    value={formData.image[0]} // Update the value to use an array
-                    onChange={handleChange}
+                    value={recipeData.image[0]} // Update the value to use an array
+                    onChange={handleUpdate}
                   />
                 </div>
                 <div className="typephoto">
@@ -194,8 +236,8 @@ function Add({ className }) {
                     type="text"
                     name="image2"
                     placeholder="Add image url"
-                    value={formData.image[1]} // Update the value to use an array
-                    onChange={handleChange}
+                    value={recipeData.image[1]} // Update the value to use an array
+                    onChange={handleUpdate}
                   />
                 </div>
               </div>
@@ -207,7 +249,7 @@ function Add({ className }) {
                     type="text"
                     name="video"
                     placeholder="Add video url"
-                    value={formData.video}
+                    value={recipeData.video}
                     onChange={handleChange}
                   />
                 </div>
@@ -228,9 +270,9 @@ function Add({ className }) {
                 <input
                   type="text"
                   placeholder="e.g. 2 cups flour"
-                  value={formData.ingredients[index]}
+                  value={recipeData.ingredients[index]}
                   onChange={(e) => {
-                    const newIngredients = [...formData.ingredients];
+                    const newIngredients = [...recipeData.ingredients];
                     newIngredients[index] = e.target.value;
                     setFormData({
                       ...formData,
@@ -262,7 +304,7 @@ function Add({ className }) {
               <div key={index} className="typedirec">
                 <p>Step {index + 1}</p>
                 <textarea
-                  value={formData.steps[index]}
+                  value={recipeData.steps[index]}
                   onChange={(e) => {
                     const newSteps = [...formData.steps];
                     newSteps[index] = e.target.value;
@@ -292,7 +334,7 @@ function Add({ className }) {
                   type="text"
                   name="prepTime"
                   placeholder="0"
-                  value={formData.prepTime}
+                  value={recipeData.prepTime}
                   onChange={handleChange}
                 />
                 <label for="preptime">min</label>
@@ -303,7 +345,7 @@ function Add({ className }) {
                   type="text"
                   name="cookTime"
                   placeholder="0"
-                  value={formData.cookTime}
+                  value={recipeData.cookTime}
                   onChange={handleChange}
                 />
                 <label for="cooktime">min</label>
@@ -315,7 +357,7 @@ function Add({ className }) {
                 <label for="level">
                   <h2>Level</h2>
                 </label>
-                <select id="level" name="level">
+                <select id="level" name="level" value={recipeData.level}>
                   <option value="easy">Easy</option>
                   <option value="Medium">Medium</option>
                   <option value="hard">Hard</option>
@@ -329,7 +371,7 @@ function Add({ className }) {
                 <select
                   id="recipe-type"
                   name="type"
-                  value={formData.type}
+                  value={recipeData.type}
                   onChange={handleChange}
                 >
                   <option value="breakfast">Breakfast</option>
@@ -352,7 +394,7 @@ function Add({ className }) {
                   type="text"
                   name="serving"
                   placeholder="0"
-                  value={formData.serving}
+                  value={recipeData.serving}
                   onChange={handleChange}
                 />
               </div>
@@ -363,7 +405,7 @@ function Add({ className }) {
                 <select
                   id="recipe-options"
                   name="opt"
-                  value={formData.options}
+                  value={recipeData.options}
                   onChange={handleChange}
                 >
                   <option value="nonspicy">Non-Spicy</option>
@@ -381,15 +423,17 @@ function Add({ className }) {
               type="text"
               name="author"
               placeholder="Your name"
-              value={formData.author}
+              value={recipeData.author}
               onChange={handleChange}
             />
           </div>
 
           <div className="section_6">
-          <Link to={"/"}><button className="cancel-button" type="button">
-              Cancel {/* Use type="reset" to reset the form */}
-            </button></Link>
+            <Link to={"/"}>
+              <button className="cancel-button" type="button">
+                Cancel {/* Use type="reset" to reset the form */}
+              </button>
+            </Link>
             <button className="save-button" type="submit">
               Save Recipe
             </button>
@@ -403,256 +447,260 @@ function Add({ className }) {
   );
 }
 
-Add.propTypes = {
+Edit.propTypes = {
   className: PropTypes.string.isRequired,
 };
 
-export default styled(Add)`
-.container{
-  margin: 0 10%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.container .top_name {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin: 130px 130px 0 130px;
-  color: #e23c34;
-  
-}
+export default styled(Edit)`
+  .container {
+    margin: 0 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .container .top_name {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 130px 130px 0 130px;
+    color: #e23c34;
+  }
 
-.container .section_1 {
-  margin-top: 20px;
-  padding: 20px 0;
-  border-top: #e23c34 1px solid;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  flex-direction: row;
-  color: #e23c34;
+  .container .section_1 {
+    margin-top: 20px;
+    padding: 20px 0;
+    border-top: #e23c34 1px solid;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+    color: #e23c34;
+  }
 
-}
+  .container .section_1 input {
+    width: 500px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    outline: none;
+  }
 
-.container .section_1 input{
-  width: 500px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 0;
-  outline: none;
-}
+  .container .section_1 input::placeholder {
+    color: #ababab;
+  }
 
-.container .section_1 input::placeholder{
-  color: #ababab;
-}
+  .container .section_1 textarea {
+    width: 500px;
+    height: 80px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    outline: none;
+    resize: none;
+    background-color: #fff;
+  }
+  .section_3 textarea::placeholder {
+    color: #ababab;
+    font-family: "Inter", sans-serif;
+  }
 
-.container .section_1 textarea{
-  width: 500px;
-  height: 80px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 0;
-  outline: none;
-  resize: none;
-  background-color: #fff;
-}
-.section_3 textarea::placeholder{
-  color: #ababab;
-  font-family: "Inter", sans-serif;;
-}
+  .container .section_1 h2 {
+    margin: 10px 0;
+  }
 
-.container .section_1 h2{
-  margin: 10px 0;
-}
+  .container .section_1 textarea::placeholder {
+    color: transparent;
+  }
 
-.container .section_1 textarea::placeholder {
-  color: transparent;
-}
+  .container .section_2,
+  .container .section_3,
+  .container .section_4,
+  .container .section_5 {
+    margin-top: 20px;
+    padding: 20px 0;
+    border-top: #e23c34 1px solid;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+    color: #e23c34;
+  }
 
-.container .section_2, 
-.container .section_3, 
-.container .section_4,
-.container .section_5 {
-  margin-top: 20px;
-  padding: 20px 0;
-  border-top: #e23c34 1px solid;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  flex-direction: row;
-  color: #e23c34;
-}
+  .container .section_2 input,
+  .container .section_5 input {
+    width: 500px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 0;
+    outline: none;
+  }
 
-.container .section_2 input, .container .section_5 input{
-  width: 500px;
-  padding: 10px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  border: 0;
-  outline: none;
+  .container .section_2 input::placeholder,
+  .container .section_5 input::placeholder {
+    color: #ababab;
+  }
 
-}
+  .container .section_2 .typeingre,
+  .typedirec {
+    display: flex;
+    align-items: center;
+  }
+  .container .section_2 .typeingre i,
+  .typedirec i {
+    color: #ababab;
+  }
 
-.container .section_2 input::placeholder, .container .section_5 input::placeholder{
-  color: #ababab;
-}
+  .container .section_2 .typeingre i:hover,
+  .typedirec i:hover {
+    cursor: pointer;
+    color: #6b6b6b;
+    transition: all ease 0.5s;
+  }
 
-.container .section_2 .typeingre, .typedirec{
-  display: flex;
-  align-items: center;
-}
-.container .section_2 .typeingre i, .typedirec i{ 
-  color: #ababab
-}
+  .container .section_2 button,
+  .container .section_3 button {
+    background-color: #e23c34;
+    color: #fff;
+    border: #e23c34 2px solid;
+    border-radius: 100px;
+    padding: 10px;
+    transition: 0.3s;
+    text-align: center;
+    margin: 10px 0;
+    width: 15%;
+  }
 
-.container .section_2 .typeingre i:hover, .typedirec i:hover{ 
-  cursor: pointer;
-  color: #6b6b6b;
-  transition: all ease 0.5s;
-}
+  .container .section_2 button:hover,
+  .container .section_3 button:hover {
+    background-color: #fdee82;
+    color: #e23c34;
+    border: #e23c34 2px solid;
+    border-radius: 100px;
+    padding: 10px;
+    cursor: pointer;
+  }
 
-.container .section_2 button, .container .section_3 button{
-  background-color: #e23c34;
-  color: #fff;
-  border: #e23c34 2px solid;
-  border-radius: 100px;
-  padding: 10px;
-  transition: .3s;
-  text-align: center;
-  margin: 10px 0;
-  width: 15%;
-}
+  .container .section_2 h2,
+  h3 {
+    margin: 10px 0;
+  }
 
-.container .section_2 button:hover, .container .section_3 button:hover{
-  background-color: #fdee82;
-  color: #e23c34;
-  border: #e23c34 2px solid;
-  border-radius: 100px;
-  padding: 10px;
-  cursor: pointer;
-}
+  .container .section_3 textarea {
+    width: 500px;
+    height: 80px;
+    padding: 10px;
+    margin: 10px;
+    border: 0;
+    outline: none;
+    resize: none;
+    background-color: #fff;
+  }
 
-.container .section_2 h2, h3{
-  margin: 10px 0;
-}
+  .container .section_3 textarea::placeholder {
+    color: #ababab;
+  }
 
-.container .section_3 textarea{
-  width: 500px;
-  height: 80px;
-  padding: 10px;
-  margin: 10px;
-  border: 0;
-  outline: none;
-  resize: none;
-  background-color: #fff;
-}
+  .container .section_4 {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-.container .section_3 textarea::placeholder {
-  color: #ababab;
-}
+  .container .section_4 .selectBox {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
 
-.container .section_4{
-  display: flex;
-  flex-wrap: wrap;
-}
+  .container .section_4 .selectBox input {
+    width: 50px;
+    height: 30px;
+    margin: 10px;
+    border: 0;
+    text-align: center;
+    outline: none;
+  }
 
-.container .section_4 .selectBox{
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-  margin-bottom: 20px;
-}
+  .container .section_4 .selectBox input::placeholder {
+    color: #ababab;
+    cursor: pointer;
+  }
 
-.container .section_4 .selectBox input{
-  width: 50px;
-  height: 30px;
-  margin: 10px;
-  border: 0;
-  text-align: center;
-  outline: none;
-}
+  .container .section_4 .selectBox select {
+    width: 150px;
+    height: 30px;
+    margin: 10px;
+    border: 0;
+    outline: none;
+    border: #fff 2px solid;
+    cursor: pointer;
+  }
 
-.container .section_4 .selectBox input::placeholder{
-  color: #ababab;
-  cursor: pointer;
-}
+  .container .section_4 .selectBox select:hover {
+    background-color: #fff;
+    color: #e23c34;
+    border: #e23c34 2px solid;
+    transition: 0.3s;
+  }
 
-.container .section_4 .selectBox select{
-  width: 150px;
-  height: 30px;
-  margin: 10px;
-  border: 0;
-  outline: none;
-  border: #fff 2px solid;
-  cursor: pointer;
-}
+  .container .section_4 .selectBox select option {
+    background-color: #ffffff;
+    color: #333;
+    padding: 5px;
+    outline: none;
+  }
 
-.container .section_4 .selectBox select:hover {
-  background-color: #fff;
-  color: #e23c34;
-  border: #e23c34 2px solid;
-  transition: .3s;
-}
+  .container .section_4 label {
+    margin-left: 10px;
+  }
 
-.container .section_4 .selectBox select option {
-  background-color: #ffffff;
-  color: #333;
-  padding: 5px;
-  outline: none;
+  .container .section_5 h2 {
+    margin-bottom: 10px;
+  }
 
-}
+  .section_6 .cancel-button {
+    background-color: #fff;
+    color: #e23c34;
+    border: #e23c34 2px solid;
+    border-radius: 100px;
+    padding: 10px;
+    transition: 0.3s;
+    text-align: center;
+    margin: 10px 0;
+    cursor: pointer;
+    width: 150px;
+  }
 
-.container .section_4 label{
-  margin-left: 10px;
-}
+  .section_6 .cancel-button:hover {
+    background-color: #fdee82;
+    color: #e23c34;
+    border: #e23c34 2px solid;
+    border-radius: 100px;
+  }
 
-.container .section_5 h2{
-  margin-bottom: 10px;
-}
+  .section_6 .save-button {
+    background-color: #e23c34;
+    color: #fff;
+    border: #e23c34 2px solid;
+    border-radius: 100px;
+    padding: 10px;
+    transition: 0.3s;
+    text-align: center;
+    margin-left: 10px;
+    cursor: pointer;
+    width: 150px;
+  }
 
-.section_6 .cancel-button{
-  background-color: #fff;
-  color: #e23c34;
-  border: #e23c34 2px solid;
-  border-radius: 100px;
-  padding: 10px;
-  transition: .3s;
-  text-align: center;
-  margin: 10px 0;
-  cursor: pointer;
-  width: 150px;
-}
+  .section_6 .save-button:hover {
+    background-color: #fdee82;
+    color: #e23c34;
+    border: #e23c34 2px solid;
+    border-radius: 100px;
+  }
 
-.section_6 .cancel-button:hover{
-  background-color: #fdee82;
-  color: #e23c34;
-  border: #e23c34 2px solid;
-  border-radius: 100px;
-}
-
-.section_6 .save-button{
-  background-color: #e23c34;
-  color: #fff;
-  border: #e23c34 2px solid;
-  border-radius: 100px;
-  padding: 10px;
-  transition: .3s;
-  text-align: center;
-  margin-left: 10px;
-  cursor: pointer;
-  width: 150px;
-}
-
-.section_6 .save-button:hover{
-  background-color: #fdee82;
-  color: #e23c34;
-  border: #e23c34 2px solid;
-  border-radius: 100px;
-}
-
-.section_6{
-  text-align: right;
-}
+  .section_6 {
+    text-align: right;
+  }
 `;

@@ -125,7 +125,7 @@ header .searchbar input {
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  padding: 50px;
+  padding-top: 100px;
 }
 
 .top_banner {
@@ -146,6 +146,9 @@ header .searchbar input {
   position: absolute;
   top: 250px;
   right: 70%;
+}
+.type_cir h3{
+  width: 100%;
 }
 .top_banner .slideshow {
   height: 500px;

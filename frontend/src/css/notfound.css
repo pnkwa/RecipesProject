@@ -1,0 +1,20 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.NotFoundPage {
+    height: 100vh;
+    background-color: #f4efdc;
+    color: #e23c34;
+}
+
+.NotFoundPage h1 {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    font-size: 75px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}

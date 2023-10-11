@@ -35,6 +35,12 @@ router.get("/", (req, res) => {
       recipe.name.toLowerCase().includes(nameQuery.toLowerCase())
     );
   }
+  //Get recipes by total time (cook + prep)
+  // if (total) {
+  //   filteredRecipes = filteredRecipes.filter((recipe) =>
+  //     (recipe.prep + recipe.cook) <= total
+  //   );
+  // }
   // Return all recipes if no query parameters are specified
   res.json(filteredRecipes);
 });

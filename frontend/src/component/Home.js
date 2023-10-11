@@ -1,12 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RecipesCard from "./cardlist/RecipesCard";
 import Banner from "./Banner";
 import TimeSlider from "./TimeSlider";
 import LevelSelector from "./LevelSelector";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 function Home({ className }) {
+
+  const [data, setData] = useState([]);
+  const [selectType, setSelectType] = useState(null);
+  const [selectOptions, setSelectOptions] = useState(null);
+  const baseURL = "http://127.0.0.1:8000/recipes";
+
+  useEffect(() => {
+    if (selectType) {
+      const apiURL = `${baseURL}?type=${selectType}`;
+      axios.get(apiURL)
+        .then(response => {
+          setData(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
+  }, [selectType]);
+  
+  useEffect(() => {
+    if (selectOptions) {
+      const apiURL = `${baseURL}?options=${selectOptions}`;
+      axios.get(apiURL)
+        .then(response => {
+          setData(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
+  }, [selectOptions]);
+
+  const handleType = (dishType) => {
+    setSelectType(dishType);
+  };
+
+  const handleOptions = (dishOptions) => {
+    setSelectOptions(dishOptions);
+  };
+
+
   return (
     <div className={className}>
       <Banner />
@@ -46,25 +88,25 @@ function Home({ className }) {
 
       <div class="recipes_lists">
         <div class="optionsbar">
-          <button type="submit">Spicy</button>
-          <button type="submit">Non-spicy</button>
-          <button type="submit">Vegetarian</button>
-          <button type="submit">Vegan</button>
+          <button type="submit" onClick={() => handleOptions('spicy')}>Spicy</button>
+          <button type="submit" onClick={() => handleOptions('non-spicy')}>Non-spicy</button>
+          <button type="submit" onClick={() => handleOptions('vegetarian')}>Vegetarian</button>
+          <button type="submit" onClick={() => handleOptions('vegan')}>Vegan</button>
         </div>
 
         <div class="recipes_box">
           <div class="sidebar">
             <div class="type">
               <h2>Dish Type</h2>
-              <a href="/">Breakfast</a>
-              <a href="/">Lunch</a>
-              <a href="/">Dinner</a>
-              <a href="/">Appetizer</a>
-              <a href="/">Salad</a>
-              <a href="/">Main-course</a>
-              <a href="/">Baked-goods</a>
-              <a href="/">Dessert</a>
-              <a href="/">Soup</a>
+              <a onClick={() => handleType('breakfast')}>Breakfast</a>
+              <a onClick={() => handleType('lunch')}>Lunch</a>
+              <a onClick={() => handleType('dinner')}>Dinner</a>
+              <a onClick={() => handleType('appetizer')}>Appetizer</a>
+              <a onClick={() => handleType('salad')}>Salad</a>
+              <a onClick={() => handleType('main-course')}>Main-course</a>
+              <a onClick={() => handleType('baked-goods')}>Baked-goods</a>
+              <a onClick={() => handleType('dessert')}>Dessert</a>
+              <a onClick={() => handleType('soup')}>Soup</a>
             </div>
 
             <TimeSlider />

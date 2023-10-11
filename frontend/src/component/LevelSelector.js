@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 function LevelSelector({ className }) {
-  const [level, setlevel] = useState("");
+  const [data, setData] = useState([]);
+  const [level, setLevel] = useState("");
+  const baseURL = "http://127.0.0.1:8000/recipes";
+
+  useEffect(() => {
+    if (level) {
+      const apiURL = `${baseURL}?level=${level}`;
+      axios
+        .get(apiURL)
+        .then((response) => {
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, [level]); 
 
   const levelClick = (event) => {
-    const level = event.target.value;
-    setlevel(level);
-    // add API call
+    const selectedLevel = event.target.value;
+    setLevel(selectedLevel); 
   };
 
   return (

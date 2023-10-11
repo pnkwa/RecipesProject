@@ -1,15 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Single from "./Single";
 import PropTypes from "prop-types";
+import axios from "axios";
 
-function Search({className}) {
+function Search({ className }) {
+  const [search, setSearch] = useState("");
+  const [name, setName] = useState([]);
+  const baseURL = "http://127.0.0.1:8000/recipes";
+
+  const HandleSearchChange = (e) => {
+    setSearch(e);
+  };
+
+  useEffect(() => {
+    if (search) {
+      const apiURL = `${baseURL}?name=${search}`;
+      axios.get(apiURL).then((res) => {
+        setName(res.data);
+      });
+    }
+  }, [search]);
+
   return (
     <div className={className}>
       <form action="" class="searchbar">
-        <input type="text" placeholder="Look for yummy recipes!" />
-        <button type="submit">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
+        <input
+          type="text"
+          placeholder="Look for yummy recipes!"
+          onChange={(e) => HandleSearchChange(e.target.value)}
+        />
+        <Link to={`/recipes/${name[0].id}`}>
+          <button type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </Link>
       </form>
     </div>
   );

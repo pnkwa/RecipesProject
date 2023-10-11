@@ -1,34 +1,55 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 function TimeSlider({ className }) {
   const sliderRef = useRef(null);
   const outputRef = useRef(null);
   const [sliderValue, setSliderValue] = useState(30);
+  const [data, setData] = useState([]);
+  const baseURL = "http://127.0.0.1:8000/recipes";
 
   useEffect(() => {
     const slider = sliderRef.current;
     const output = outputRef.current;
 
     if (slider && output) {
-      slider.oninput = function () {
-        var value =
-          ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
-        var color =
-          "linear-gradient(to right, #e23c34 0%, #e23c34 " +
-          value +
-          "%, #d3d3d3 " +
-          value +
-          "%, #d3d3d3 100%)";
-        slider.style.background = color;
-        output.innerHTML = this.value;
-
-        setSliderValue(this.value);
-        //add api call
-      };
+      slider.addEventListener("input", handleSliderChange);
+      return () => slider.removeEventListener("input", handleSliderChange);
     }
   }, []);
+
+  useEffect(() => {
+    const apiURL = `${baseURL}?total=${sliderValue}`;
+    axios
+      .get(apiURL)
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [sliderValue]);
+
+  const handleSliderChange = () => {
+    const slider = sliderRef.current;
+    const output = outputRef.current;
+
+    if (slider && output) {
+      var value =
+        ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+      var color =
+        "linear-gradient(to right, #e23c34 0%, #e23c34 " +
+        value +
+        "%, #d3d3d3 " +
+        value +
+        "%, #d3d3d3 100%)";
+      slider.style.background = color;
+      output.innerHTML = slider.value;
+      setSliderValue(slider.value);
+    }
+  };
 
   return (
     <div className={className}>

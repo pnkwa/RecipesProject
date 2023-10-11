@@ -1,31 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import Card from "./Card";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-function RecipesCard({ className }) {
-  const [recipeCardData, setrecipeCardData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/recipes/`)
-      .then((response) => {
-        setrecipeCardData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }, []);
-
+function RecipesCard({ className, data, loading, error }) {
   if (loading) {
     return <div>Loading...</div>;
   }
-
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -33,7 +14,7 @@ function RecipesCard({ className }) {
   return (
     <div className={className}>
       <div className="recipes_cards" id="scoll">
-        {recipeCardData.map((recipe, index) => (
+        {data.map((recipe, index) => (
           <Card key={index} recipeData={recipe} />
         ))}
       </div>
@@ -43,6 +24,9 @@ function RecipesCard({ className }) {
 
 RecipesCard.propTypes = {
   className: PropTypes.string.isRequired,
+  recipeCardData: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.object,
 };
 
 export default styled(RecipesCard)`

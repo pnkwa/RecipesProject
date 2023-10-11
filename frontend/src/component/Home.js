@@ -1,45 +1,109 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import RecipesCard from "./cardlist/RecipesCard";
 import Banner from "./Banner";
-import TimeSlider from "./TimeSlider";
-import LevelSelector from "./LevelSelector";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import axios from "axios";
 
 function Home({ className }) {
-
   const [data, setData] = useState([]);
   const [selectType, setSelectType] = useState(null);
   const [selectOptions, setSelectOptions] = useState(null);
+  const [sliderValue, setSliderValue] = useState(40);
+  const [level, setLevel] = useState("");
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const sliderRef = useRef(null);
+  const outputRef = useRef(null);
+
   const baseURL = "http://127.0.0.1:8000/recipes";
 
+  //get all
+  useEffect(() => {
+    axios
+      .get(baseURL)
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+
+  //get by type
   useEffect(() => {
     if (selectType) {
       const apiURL = `${baseURL}?type=${selectType}`;
-      axios.get(apiURL)
-        .then(response => {
+      axios
+        .get(apiURL)
+        .then((response) => {
           setData(response.data);
         })
-        .catch(error => {
-          console.error('Error fetching data:', error);
+        .catch((error) => {
+          console.error("Error fetching data:", error);
         });
     }
   }, [selectType]);
-  
+
+  //get by options
   useEffect(() => {
     if (selectOptions) {
       const apiURL = `${baseURL}?options=${selectOptions}`;
-      axios.get(apiURL)
-        .then(response => {
+      axios
+        .get(apiURL)
+        .then((response) => {
           setData(response.data);
         })
-        .catch(error => {
-          console.error('Error fetching data:', error);
+        .catch((error) => {
+          console.error("Error fetching data:", error);
         });
     }
   }, [selectOptions]);
 
+  //get by time
+  useEffect(() => {
+    const apiURL = `${baseURL}?total=${sliderValue}`;
+    axios
+      .get(apiURL)
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [sliderValue]);
+
+  // get by level
+  useEffect(() => {
+    if (level) {
+      const apiURL = `${baseURL}?level=${level}`;
+      axios
+        .get(apiURL)
+        .then((response) => {
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, [level]);
+
+  //time slider useRef
+  useEffect(() => {
+    const slider = sliderRef.current;
+    const output = outputRef.current;
+
+    if (slider && output) {
+      slider.addEventListener("input", handleSliderChange);
+      return () => slider.removeEventListener("input", handleSliderChange);
+    }
+  }, []);
+
+  //functions
   const handleType = (dishType) => {
     setSelectType(dishType);
   };
@@ -48,6 +112,29 @@ function Home({ className }) {
     setSelectOptions(dishOptions);
   };
 
+  const handleSliderChange = () => {
+    const slider = sliderRef.current;
+    const output = outputRef.current;
+
+    if (slider && output) {
+      var value =
+        ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+      var color =
+        "linear-gradient(to right, #e23c34 0%, #e23c34 " +
+        value +
+        "%, #d3d3d3 " +
+        value +
+        "%, #d3d3d3 100%)";
+      slider.style.background = color;
+      output.innerHTML = slider.value;
+      setSliderValue(slider.value);
+    }
+  };
+
+  const levelClick = (event) => {
+    const selectedLevel = event.target.value;
+    setLevel(selectedLevel);
+  };
 
   return (
     <div className={className}>
@@ -88,31 +175,100 @@ function Home({ className }) {
 
       <div class="recipes_lists">
         <div class="optionsbar">
-          <button type="submit" onClick={() => handleOptions('spicy')}>Spicy</button>
-          <button type="submit" onClick={() => handleOptions('non-spicy')}>Non-spicy</button>
-          <button type="submit" onClick={() => handleOptions('vegetarian')}>Vegetarian</button>
-          <button type="submit" onClick={() => handleOptions('vegan')}>Vegan</button>
+          <button type="submit" onClick={() => handleOptions("spicy")}>
+            Spicy
+          </button>
+          <button type="submit" onClick={() => handleOptions("non-spicy")}>
+            Non-spicy
+          </button>
+          <button type="submit" onClick={() => handleOptions("vegetarian")}>
+            Vegetarian
+          </button>
+          <button type="submit" onClick={() => handleOptions("vegan")}>
+            Vegan
+          </button>
         </div>
 
         <div class="recipes_box">
           <div class="sidebar">
             <div class="type">
               <h2>Dish Type</h2>
-              <a onClick={() => handleType('breakfast')}>Breakfast</a>
-              <a onClick={() => handleType('lunch')}>Lunch</a>
-              <a onClick={() => handleType('dinner')}>Dinner</a>
-              <a onClick={() => handleType('appetizer')}>Appetizer</a>
-              <a onClick={() => handleType('salad')}>Salad</a>
-              <a onClick={() => handleType('main-course')}>Main-course</a>
-              <a onClick={() => handleType('baked-goods')}>Baked-goods</a>
-              <a onClick={() => handleType('dessert')}>Dessert</a>
-              <a onClick={() => handleType('soup')}>Soup</a>
+              <a onClick={() => handleType("breakfast")}>Breakfast</a>
+              <a onClick={() => handleType("lunch")}>Lunch</a>
+              <a onClick={() => handleType("dinner")}>Dinner</a>
+              <a onClick={() => handleType("appetizer")}>Appetizer</a>
+              <a onClick={() => handleType("salad")}>Salad</a>
+              <a onClick={() => handleType("main-course")}>Main-course</a>
+              <a onClick={() => handleType("baked-goods")}>Baked-goods</a>
+              <a onClick={() => handleType("dessert")}>Dessert</a>
+              <a onClick={() => handleType("soup")}>Soup</a>
             </div>
+            {/* time */}
+            <div className="time">
+              <label>
+                <h2>Time</h2>
+              </label>
 
-            <TimeSlider />
-            <LevelSelector />
+              <div className="slider-container">
+                <input
+                  type="range"
+                  min="0"
+                  max="180"
+                  value={sliderValue}
+                  className="slider"
+                  ref={sliderRef}
+                />
+                <p>
+                  <span ref={outputRef}>40</span> min
+                </p>
+              </div>
+            </div>
+            {/* time */}
+            {/* level */}
+            <div className="level">
+              <h2>Level</h2>
+              <div className="box">
+                <div className="icon">
+                  <form action="/">
+                    <input
+                      type="radio"
+                      id="easy"
+                      name="level"
+                      value="easy"
+                      checked={level === "easy"}
+                      onChange={levelClick}
+                    />
+                    <label htmlFor="easy">Easy</label>
+                    <br />
+
+                    <input
+                      type="radio"
+                      id="medium"
+                      name="level"
+                      value="medium"
+                      checked={level === "medium"}
+                      onChange={levelClick}
+                    />
+                    <label htmlFor="medium">Medium</label>
+                    <br />
+
+                    <input
+                      type="radio"
+                      id="hard"
+                      name="level"
+                      value="hard"
+                      checked={level === "hard"}
+                      onChange={levelClick}
+                    />
+                    <label htmlFor="hard">Hard</label>
+                    <br />
+                  </form>
+                </div>
+              </div>
+            </div>
+            {/* level */}
           </div>
-          <RecipesCard />
+          <RecipesCard data={data} loading={loading} error={error} />
         </div>
       </div>
 
@@ -299,5 +455,80 @@ export default styled(Home)`
     background-color: #fdee82;
     border: 1px solid #e23c34;
     color: #e23c34;
+  }
+
+  .time {
+    border-bottom: 1px solid #e23c34;
+    margin-right: 50px;
+    padding: 10px 0 10px 0;
+  }
+  .slider-container {
+    width: 100%;
+    text-align: center;
+  }
+
+  .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 5px;
+    background: linear-gradient(
+      to right,
+      #e23c34 0%,
+      #e23c34 20%,
+      #d3d3d3 0%,
+      #d3d3d3 100%
+    );
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+  }
+
+  .slider:hover {
+    opacity: 1;
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    background: #e23c34;
+    cursor: pointer;
+  }
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #e23c34;
+    cursor: pointer;
+  }
+
+  .level {
+    padding-top: 20px;
+    margin-right: 50px;
+  }
+  .level .box {
+    background-color: #fff;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 10px;
+  }
+  label {
+    padding-left: 30px;
+  }
+
+  input[type="radio"]:checked {
+    accent-color: #e23c34;
+    cursor: pointer;
+  }
+  input[type="radio"] {
+    cursor: pointer;
   }
 `;

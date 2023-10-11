@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Single from "./Single";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { useGlobalContext } from "../context/global";
 
 function Search({ className }) {
-  const [search, setSearch] = useState("");
+  const { handleSearchChange, search } = useGlobalContext();
+
   const [name, setName] = useState([]);
   const baseURL = "http://127.0.0.1:8000/recipes";
-
-  const HandleSearchChange = (e) => {
-    setSearch(e);
-  };
 
   useEffect(() => {
     if (search) {
@@ -29,9 +26,11 @@ function Search({ className }) {
         <input
           type="text"
           placeholder="Look for yummy recipes!"
-          onChange={(e) => HandleSearchChange(e.target.value)}
+          onChange={(e) => handleSearchChange(e.target.value)}
         />
+        {/* problem here */}
         <Link to={`/recipes/${name[0].id}`}>
+          {/* problem here */}
           <button type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>

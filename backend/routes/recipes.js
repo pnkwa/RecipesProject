@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
   const options = req.query.options;
   const level = req.query.level;
   const nameQuery = req.query.name;
+  const total = req.query.total;
   // Filter recipes based on query parameters
   // Example URL: http://localhost:3000/recipes?options=vegetarian
   let filteredRecipes = data;
@@ -36,11 +37,11 @@ router.get("/", (req, res) => {
     );
   }
   //Get recipes by total time (cook + prep)
-  // if (total) {
-  //   filteredRecipes = filteredRecipes.filter((recipe) =>
-  //     (recipe.prep + recipe.cook) <= total
-  //   );
-  // }
+  if (total) {
+    filteredRecipes = filteredRecipes.filter((recipe) =>
+      (recipe.prep + recipe.cook) <= Number(total)
+    );
+  }
   // Return all recipes if no query parameters are specified
   res.json(filteredRecipes);
 });

@@ -17,7 +17,7 @@ function Home({ className }) {
 
   const sliderRef = useRef(null);
   const outputRef = useRef(null);
-  
+
   const baseURL = "http://127.0.0.1:8000/recipes";
 
   //get all
@@ -77,7 +77,6 @@ function Home({ className }) {
       });
   }, [sliderValue]);
 
-  
   // get by level
   useEffect(() => {
     if (level) {
@@ -93,7 +92,6 @@ function Home({ className }) {
     }
   }, [level]);
 
-
   //time slider useRef
   useEffect(() => {
     const slider = sliderRef.current;
@@ -105,7 +103,7 @@ function Home({ className }) {
     }
   }, []);
 
-//functions
+  //functions
   const handleType = (dishType) => {
     setSelectType(dishType);
   };
@@ -142,31 +140,31 @@ function Home({ className }) {
     <div className={className}>
       <Banner />
       {/* ower names */}
-      <div class="creator">
-        <div class="cards">
-          <div class="owner">
-            <div class="ownerimg">
+      <div className="creator">
+        <div className="cards">
+          <div className="owner">
+            <div className="ownerimg">
               <img src="../images/owner/KwanJai.jpg" alt="img" />
             </div>
-            <div class="ownerdetails">
+            <div className="ownerdetails">
               <h3>Kittipat Saiud</h3>
               <p>652110270</p>
             </div>
           </div>
-          <div class="owner">
-            <div class="ownerimg">
+          <div className="owner">
+            <div className="ownerimg">
               <img src="../images/owner/Lugie.jpg" alt="img" />
             </div>
-            <div class="ownerdetails">
+            <div className="ownerdetails">
               <h3>Luca Gomis</h3>
               <p>652110300</p>
             </div>
           </div>
-          <div class="owner">
-            <div class="ownerimg">
+          <div className="owner">
+            <div className="ownerimg">
               <img src="../images/owner/KwaKwa.jpg" alt="img" />
             </div>
-            <div class="ownerdetails">
+            <div className="ownerdetails">
               <h3>Prapanit Pajeekum</h3>
               <p>652110292</p>
             </div>
@@ -175,8 +173,8 @@ function Home({ className }) {
       </div>
       {/* ower names */}
 
-      <div class="recipes_lists">
-        <div class="optionsbar">
+      <div className="recipes_lists">
+        <div className="optionsbar">
           <button type="submit" onClick={() => handleOptions("spicy")}>
             Spicy
           </button>
@@ -191,9 +189,9 @@ function Home({ className }) {
           </button>
         </div>
 
-        <div class="recipes_box">
-          <div class="sidebar">
-            <div class="type">
+        <div className="recipes_box">
+          <div className="sidebar">
+            <div className="type">
               <h2>Dish Type</h2>
               <a onClick={() => handleType("breakfast")}>Breakfast</a>
               <a onClick={() => handleType("lunch")}>Lunch</a>
@@ -274,7 +272,7 @@ function Home({ className }) {
         </div>
       </div>
 
-      <div class="end_banner">
+      <div className="end_banner">
         <h2>
           "You've been trying to find a recipe, but you can't seem to find it in
           Recipe Box? Tell us!"
@@ -399,6 +397,7 @@ export default styled(Home)`
     padding-bottom: 30px;
     margin-right: 50px;
     border-bottom: 1px solid #e23c34;
+    cursor: pointer;
   }
   .sidebar {
     width: 300px;
@@ -477,7 +476,7 @@ export default styled(Home)`
     background: linear-gradient(
       to right,
       #e23c34 0%,
-      #e23c34 20%,
+      #e23c34 25%,
       #d3d3d3 0%,
       #d3d3d3 100%
     );

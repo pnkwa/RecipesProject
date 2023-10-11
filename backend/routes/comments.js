@@ -36,7 +36,7 @@ router.post("/:idRecipe/comments", (req, res) => {
   res.json(newComment);
 });
 
-router.patch("/:idRecipe/comments/:id", (req, res) => {
+router.put("/:idRecipe/comments/:id", (req, res) => {
   const idRecipe = Number.parseInt(req.params.idRecipe);
   const id = Number.parseInt(req.params.id);
   const { text } = req.body;

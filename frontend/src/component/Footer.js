@@ -6,12 +6,12 @@ function Footer({ className }) {
   return (
     <div className={className}>
       <footer>
-        <div class="slo_1">
+        <div className="slo_1">
           <p>Make us a part of your lifestyle</p>
-          <i class="fa-brands fa-square-facebook"></i>
-          <i class="fa-brands fa-instagram"></i>
+          <i className="fa-brands fa-square-facebook"></i>
+          <i className="fa-brands fa-instagram"></i>
         </div>
-        <div class="slo_2">
+        <div className="slo_2">
           <p>A taste of home in every dish</p>
         </div>
       </footer>

@@ -8,12 +8,12 @@ function NavBar({ className }) {
   return (
     <div className={className}>
       <header>
-        <div class="logo">
+        <div className="logo">
           <Link to="/">
             <img src="../images/logo/logo.png" alt="img" />
           </Link>
         </div>
-        <div class="category">
+        <div className="category">
           <Link to={"/add"}>Create Recipe</Link>
         </div>
         <Search />

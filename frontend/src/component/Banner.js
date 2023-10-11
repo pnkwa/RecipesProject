@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 function Banner({ className }) {
   return (
     <div className={className}>
-      <div class="banner">
-        <div class="trailer">
+      <div className="banner">
+        <div className="trailer">
           <h1>Steak Frites</h1>
           <h2>
             "A classic French dish featuring a perfectly cooked steak and crispy
@@ -14,7 +14,7 @@ function Banner({ className }) {
           </h2>
           <a href="#scoll">Explore</a>
         </div>
-        <div class="slideshow">
+        <div className="slideshow">
           <img src="../images/recipe/steak.jpg" alt="img" />
         </div>
       </div>

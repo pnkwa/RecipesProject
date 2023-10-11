@@ -1,21 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import axios from "axios";
 
-function Comment({ className }) {
+function Comment({ className, idRecipe }) {
+  const [name, setName] = useState("");
+  const [comment, setComment] = useState("");
+  const baseURL = "http://127.0.0.1:8000/recipes";
+
+  const handleCommentSubmit = () => {
+    if (name.trim() !== "" && comment.trim() !== "") {
+      const newComment = {
+        user: name,
+        text: comment,
+      };
+
+      axios
+        .post(`${baseURL}/${idRecipe}/comments`, newComment)
+        .then((response) => {
+          console.log("Comment posted successfully:", response.data);
+          // You can update your comment list here, e.g., by making a new GET request for comments.
+          // To update the comment list, you might use a state variable that holds the comments.
+        })
+        .catch((error) => {
+          console.error("Error posting comment:", error);
+        });
+
+      setName("");
+      setComment("");
+    }
+  };
+
   return (
     <div className={className}>
       <div className="container_comment">
         <h2>Comment</h2>
         <div className="comment_box">
           <div className="typename">
-            <input type="text" placeholder="Type name..." />
+            <input
+              type="text"
+              placeholder="Type name..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div className="typecomment">
-            <textarea placeholder="Type something...."></textarea>
+            <textarea
+              placeholder="Type something...."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            ></textarea>
           </div>
           <div className="button">
-            <button type="button">Post now</button>
+            <button onClick={handleCommentSubmit} type="button">
+              Post now
+            </button>
           </div>
         </div>
       </div>
@@ -24,6 +63,7 @@ function Comment({ className }) {
 }
 
 Comment.propTypes = {
+  idRecipe: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
 };
 

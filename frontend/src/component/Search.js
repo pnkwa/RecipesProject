@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 function Search({className}) {
   return (
     <div className={className}>
-      <form action="" class="searchbar">
+      <form action="" className="searchbar">
         <input type="text" placeholder="Look for yummy recipes!" />
         <button type="submit">
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>
     </div>

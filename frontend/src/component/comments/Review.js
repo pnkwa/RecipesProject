@@ -7,10 +7,14 @@ function Review({ idRecipe, className }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [editCommentId, setEditCommentId] = useState(null);
+  const [updatedText, setUpdatedText] = useState(null);
+
+  const baseURL = "http://127.0.0.1:8000/recipes";
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/recipes/${idRecipe}/comments`)
+      .get(`${baseURL}/${idRecipe}/comments`)
       .then((response) => {
         setReviews(response.data);
         setLoading(false);
@@ -28,6 +32,49 @@ function Review({ idRecipe, className }) {
     return <div>Error fetching reviews: {error.message}</div>;
   }
 
+  const handleEditReview = (commentId) => {
+    setEditCommentId(commentId);
+    console.log(commentId);
+
+    const comment = reviews.find((review) => review.id === commentId);
+    setUpdatedText(comment.text);
+  };
+
+  const handleDeleteReview = (commentId) => {
+    const updatedReviews = reviews.filter((review) => review.id !== commentId);
+    setReviews(updatedReviews);
+  };
+
+  const handleSaveEdit = (commentId) => {
+    console.log(commentId);
+    axios
+      .put(
+        `${baseURL}/${idRecipe}/comments/${commentId}`,
+        {
+          text: updatedText,
+        }
+      )
+      .then((response) => {
+        const updatedReviews = reviews.map((review) => {
+          if (review.id === commentId) {
+            return { ...review, text: updatedText };
+          }
+          return review;
+        });
+        setReviews(updatedReviews);
+
+        setEditCommentId(null);
+        setUpdatedText(null);
+      })
+      .catch((error) => {
+        console.error("Error edit:", error);
+      });
+  };
+
+  const cancelEdit = () => {
+    setEditCommentId(null);
+  };
+
   return (
     <div className={className}>
       <div className="container_review">
@@ -40,17 +87,45 @@ function Review({ idRecipe, className }) {
             No reviews for this recipe yet, be the first to share!
           </div>
         ) : (
-          reviews.map((review, index) => (
+            reviews.map((review, index) => (
             <div className="review_box" key={index}>
               <div className="name">
                 <h3>{review.user}</h3>
                 <div>
-                  <i className="fa-solid fa-pen-to-square"></i>
-                  <i className="fa-solid fa-trash"></i>
+                  {editCommentId === review.id ? (
+                    <>
+                      <i
+                        onClick={() => handleSaveEdit(review.id)}
+                        className="fa-solid fa-save"
+                      ></i>
+                      <i
+                        onClick={() => cancelEdit()}
+                        className="fa-solid fa-times"
+                      ></i>
+                    </>
+                  ) : (
+                    <>
+                      <i
+                        onClick={() => handleEditReview(review.id)}
+                        className="fa-solid fa-pen-to-square"
+                      ></i>
+                      <i
+                        onClick={() => handleDeleteReview(review.id)}
+                        className="fa-solid fa-trash"
+                      ></i>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="comment">
-                <p>{review.text}</p>
+                {editCommentId === review.id ? (
+                  <textarea
+                    value={updatedText}
+                    onChange={(e) => setUpdatedText(e.target.value)}
+                  />
+                ) : (
+                  <p>{review.text}</p>
+                )}
               </div>
               <div className="count">
                 <p>#{index + 1}</p>
@@ -64,7 +139,7 @@ function Review({ idRecipe, className }) {
 }
 
 Review.propTypes = {
-  idRecipe: PropTypes.number.isRequired,
+  idRecipe: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
 };
 
@@ -137,5 +212,19 @@ export default styled(Review)`
     font-size: 40px;
     color: #e23c34;
     font-weight: bold;
+  }
+
+  textarea {
+    font-family: "Inter",sans-serif;
+    background-color: #e23c34;
+    font-size: inherit;
+    width: 90%;
+    color: #fff;
+    padding-left: 10px;
+    border: 1px solid #fff;
+  }
+
+  input:focus-visible {
+    border: 1px solid #fff;
   }
 `;

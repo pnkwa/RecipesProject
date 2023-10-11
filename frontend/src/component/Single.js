@@ -98,7 +98,7 @@ function Single({ className }) {
         </div>
       </div>
       <Review idRecipe={id} />
-      <Comment />
+      <Comment idRecipe={id} />
     </div>
   );
 }

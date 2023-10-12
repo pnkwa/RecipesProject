@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Review from "./comments/Review";
-import Comment from "./comments/Comment";
 import NotFound from "./NotFound";
 import axios from "axios";
 import styled from "styled-components";
@@ -98,7 +97,6 @@ function Single({ className }) {
         </div>
       </div>
       <Review idRecipe={id} />
-      <Comment idRecipe={id} />
     </div>
   );
 }

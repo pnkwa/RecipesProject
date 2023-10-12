@@ -1,35 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import axios from "axios";
 
-function Comment({ className, idRecipe }) {
+function Comment({ className, onCommentSubmit }) {
   const [name, setName] = useState("");
   const [comment, setComment] = useState("");
-  const baseURL = "http://127.0.0.1:8000/recipes";
 
   const handleCommentSubmit = () => {
-    if (name.trim() !== "" && comment.trim() !== "") {
-      const newComment = {
-        user: name,
-        text: comment,
-      };
-
-      axios
-        .post(`${baseURL}/${idRecipe}/comments`, newComment)
-        .then((response) => {
-          console.log("Comment posted successfully:", response.data);
-          // You can update your comment list here, e.g., by making a new GET request for comments.
-          // To update the comment list, you might use a state variable that holds the comments.
-        })
-        .catch((error) => {
-          console.error("Error posting comment:", error);
-        });
-
-      setName("");
-      setComment("");
-    }
-  };
+    // Call the submit function passed from the parent component
+    onCommentSubmit(name, comment);
+    setName("");
+    setComment("");
+  }
 
   return (
     <div className={className}>
@@ -63,8 +45,8 @@ function Comment({ className, idRecipe }) {
 }
 
 Comment.propTypes = {
-  idRecipe: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
+  onCommentSubmit: PropTypes.func.isRequired,
 };
 
 export default styled(Comment)`
@@ -104,10 +86,11 @@ export default styled(Comment)`
     flex: 1;
     border: 0;
     outline: none;
-    font-size: 15px;
+    font-size: medium;
     font-family: "Inter", sans-serif;
     color: #e23c34;
     padding-left: 20px;
+    resize: none;
   }
   .typename,
   .comment_box ::placeholder {

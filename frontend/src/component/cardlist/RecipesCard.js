@@ -24,7 +24,7 @@ function RecipesCard({ className, data, loading, error }) {
 
 RecipesCard.propTypes = {
   className: PropTypes.string.isRequired,
-  recipeCardData: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
 };

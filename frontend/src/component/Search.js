@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useGlobalContext } from "../context/global";
+
 
 function Search({className}) {
+  const { handleSearchChange, search } = useGlobalContext();
+
+  const [name, setName] = useState([]);
+  const baseURL = "http://127.0.0.1:8000/recipes";
+
+  useEffect(() => {
+    if (search) {
+      const apiURL = `${baseURL}?name=${search}`;
+      axios.get(apiURL).then((res) => {
+        setName(res.data);
+      });
+    }
+  }, [search]);
+  
   return (
     <div className={className}>
-      <form action="" className="searchbar">
-        <input type="text" placeholder="Look for yummy recipes!" />
+    <form action="" class="searchbar">
+      <input
+        type="text"
+        placeholder="Look for yummy recipes!"
+        onChange={(e) => handleSearchChange(e.target.value)}
+      />
+      {/* problem here */}
+      <Link to={`/recipes/${name[0].id}`}>
+        {/* problem here */}
         <button type="submit">
-          <i className="fa-solid fa-magnifying-glass"></i>
+          <i class="fa-solid fa-magnifying-glass"></i>
         </button>
-      </form>
-    </div>
+      </Link>
+    </form>
+  </div>
   );
 }
 Search.propTypes = {

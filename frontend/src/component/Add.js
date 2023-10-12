@@ -295,7 +295,7 @@ function Add({ className }) {
                   value={formData.prepTime}
                   onChange={handleChange}
                 />
-                <label for="preptime">min</label>
+                <label htmlFor="preptime">min</label>
               </div>
               <div className="selectBox">
                 <h2>Cook Time</h2>
@@ -306,13 +306,13 @@ function Add({ className }) {
                   value={formData.cookTime}
                   onChange={handleChange}
                 />
-                <label for="cooktime">min</label>
+                <label htmlFor="cooktime">min</label>
               </div>
             </div>
 
             <div>
               <div className="selectBox">
-                <label for="level">
+                <label htmlFor="level">
                   <h2>Level</h2>
                 </label>
                 <select id="level" name="level">
@@ -322,7 +322,7 @@ function Add({ className }) {
                 </select>
               </div>
               <div className="selectBox">
-                <label for="recipe-type">
+                <label htmlFor="recipe-type">
                   <h2>Type</h2>
                 </label>
 
@@ -357,7 +357,7 @@ function Add({ className }) {
                 />
               </div>
               <div className="selectBox">
-                <label for="recipe-options">
+                <label htmlFor="recipe-options">
                   <h2>Options</h2>
                 </label>
                 <select
@@ -391,7 +391,7 @@ function Add({ className }) {
               Cancel {/* Use type="reset" to reset the form */}
             </button></Link>
             <button className="save-button" type="submit">
-              Save Recipe
+              Add Recipe
             </button>
           </div>
         </div>

@@ -44,7 +44,7 @@ function Add({ className }) {
     level: "easy",
     serving: "",
     type: "breakfast",
-    options: "",
+    options: "Non-spicy",
     author: "",
   });
 
@@ -362,7 +362,7 @@ function Add({ className }) {
                 </label>
                 <select
                   id="recipe-options"
-                  name="opt"
+                  name="options"
                   value={formData.options}
                   onChange={handleChange}
                 >

@@ -1,134 +1,162 @@
 const express = require("express");
 const router = express.Router();
-const { data } = require("../data");
+const Recipes = require("../model/recipesModel");
 
 //get all recipes
-let currentRecipeId = 3;
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const type = req.query.type;
   const options = req.query.options;
   const level = req.query.level;
-  const nameQuery = req.query.name;
+  const title = req.query.name;
   const total = req.query.total;
+
   // Filter recipes based on query parameters
   // Example URL: http://localhost:3000/recipes?options=vegetarian
-  let filteredRecipes = data;
+  let recipesList = await Recipes.findAll();
 
   //get recipes by type
   if (type) {
-    filteredRecipes = filteredRecipes.filter((recipe) => recipe.type === type);
+    recipesList = recipesList.filter((recipe) => recipe.type === type);
   }
   //get recipes by options
   if (options) {
-    filteredRecipes = filteredRecipes.filter((recipe) =>
-      recipe.options.includes(options)
-    );
+    recipesList = recipesList.filter((recipe) => recipe.options === options);
   }
   //get recipes by level
   if (level) {
-    filteredRecipes = filteredRecipes.filter(
-      (recipe) => recipe.level === level
+    recipesList = recipesList.filter((recipe) => recipe.level === level);
+  }
+  //get recipes by title
+  if (title) {
+    recipesList = recipesList.filter((recipe) =>
+      recipe.title.toLowerCase().includes(title.toLowerCase())
     );
   }
-  //get recipes by name
-  if (nameQuery) {
-    filteredRecipes = filteredRecipes.filter((recipe) =>
-      recipe.name.toLowerCase().includes(nameQuery.toLowerCase())
-    );
-  }
-  //Get recipes by total time (cook + prep)
+
+  // Filter recipes by total time (prep + cook)
   if (total) {
-    filteredRecipes = filteredRecipes.filter((recipe) =>
-      (recipe.prep + recipe.cook) <= Number(total)
+    recipesList = recipesList.filter(
+      (recipe) => recipe.prepTime + recipe.cookTime <= Number(total)
     );
   }
+
   // Return all recipes if no query parameters are specified
-  res.json(filteredRecipes);
+  res.json(recipesList);
 });
 
 //get recipes by id
-router.get("/:id", (req, res) => {
-  const recipeId = Number.parseInt(req.params.id);
-  const recipe = data.find((recipe) => recipe.id === recipeId);
-  if (!recipe) {
-    return res.status(404).json({ message: "Recipe not found" });
-  }
+router.get("/:id", async (req, res) => {
+  const recipe = await Recipes.findOne({
+    where: {
+      id: req.params.id,
+    },
+  });
   res.json(recipe);
 });
 
 //create recipe
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const {
-    name,
+    title,
+    description,
     type,
-    prep,
-    cook,
+    prepTime,
+    cookTime,
     serving,
     ingredients,
     author,
-    date,
-    details,
+    steps,
     options,
     level,
     video,
     image,
   } = req.body;
 
-  const recipe = {
-    id: currentRecipeId++,
-    name,
+  const recipe = await Recipes.create({
+    title,
+    description,
     type,
-    prep,
-    cook,
+    prepTime,
+    cookTime,
     serving,
     ingredients,
     author,
-    date,
-    details,
+    steps,
     options,
     level,
     video,
     image,
-  };
+  });
 
-  data.push(recipe);
+  //data.push(recipe);
   res.json(recipe);
 });
 
 //update recipes by id
-router.put("/:id", (req, res) => {
-  const recipeId = Number.parseInt(req.params.id);
-  const recipeIndex = data.findIndex((recipe) => recipe.id === recipeId);
+router.put("/:id", async (req, res) => {
+  const {
+    title,
+    description,
+    type,
+    prepTime,
+    cookTime,
+    serving,
+    ingredients,
+    author,
+    steps,
+    options,
+    level,
+    video,
+    image,
+  } = req.body;
 
-  if (recipeIndex === -1) {
-    return res.status(404).json({ message: "Recipe not found" });
-  }
+  const recipe = await Recipes.findOne({
+    where: {
+      id: req.params.id,
+    },
+  });
 
-  data[recipeIndex] = {
-    id: recipeId,
-    ...req.body,
-  };
-  res.json(data[recipeIndex]);
+  // const recipeIndex = Recipes.findIndex(
+  //   (recipe) => recipe.id === req.params.id
+  // )
+
+  // if(recipeIndex === -1) {
+  //   return res.status(404).json({ message: "Recipe not found" });
+  // }
+
+  recipe.title = title;
+  recipe.description = description;
+  recipe.type = type;
+  recipe.prepTime = prepTime;
+  recipe.cookTime = cookTime;
+  recipe.serving = serving;
+  recipe.ingredients = ingredients;
+  recipe.author = author;
+  recipe.steps = steps;
+  recipe.options = options;
+  recipe.level = level;
+  recipe.video = video;
+  recipe.image = image;
+
+  // recipe[recipeIndex] = {
+  //   ...recipe
+  // }
+
+  await recipe.save();
+
+  //res.json(recipe[recipeIndex]);
+  res.json(recipe);
 });
 
 //delete recipe by id
-router.delete("/:id", (req, res) => {
-  const recipeId = Number.parseInt(req.params.id);
-  const recipeIndex = data.findIndex((recipe) => recipe.id === recipeId);
-  if (recipeIndex === -1) {
-    return res.status(404).json({ message: "Recipe not found" });
-  }
+router.delete("/:id", async (req, res) => {
+  await Recipes.destroy({
+    where: {
+      id: req.params.id,
+    },
+  });
 
-  data.splice(recipeIndex, 1);
-  res.json({ message: "Recipe deleted successfully" });
+  res.sendStatus(204);
 });
-
-//get recipes by type
-
-//get recipes by options
-
-//get recipes by level
-
-//get recipes by search
 
 module.exports = router;

@@ -1,43 +1,48 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import axios from "axios";
-import { useGlobalContext } from "../context/global";
 
-
-function Search({className}) {
-  const { handleSearchChange, search } = useGlobalContext();
-
+function Search({ className }) {
+  const [search, setSearch] = useState("");
   const [name, setName] = useState([]);
   const baseURL = "http://127.0.0.1:8000/recipes";
 
+  const handleSearchChange = (e) => {
+    setSearch(e);
+  };
+
   useEffect(() => {
     if (search) {
-      const apiURL = `${baseURL}?name=${search}`;
+      const apiURL = `${baseURL}?title=${search}`;
       axios.get(apiURL).then((res) => {
         setName(res.data);
       });
     }
   }, [search]);
-  
+
   return (
     <div className={className}>
-    <form action="" class="searchbar">
-      <input
-        type="text"
-        placeholder="Look for yummy recipes!"
-        onChange={(e) => handleSearchChange(e.target.value)}
-      />
-      {/* problem here */}
-      <Link to={`/recipes/${name[0].id}`}>
-        {/* problem here */}
-        <button type="submit">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </Link>
-    </form>
-  </div>
+      <form action="" className="searchbar">
+        <input
+          type="text"
+          placeholder="Look for yummy recipes!"
+          onChange={(e) => handleSearchChange(e.target.value)}
+        />
+        {name && name[0] && name[0].id ? (
+          <Link to={`/recipes/${name[0].id}`}>
+            <button type="submit">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </Link>
+        ) : (
+          <button type="submit" disabled aria-label="Search">
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </button>
+        )}
+      </form>
+    </div>
   );
 }
 Search.propTypes = {
@@ -47,7 +52,6 @@ Search.propTypes = {
 export default styled(Search)`
   .searchbar {
     background: #fff;
-    display: flex;
     border-radius: 60px;
   }
   .searchbar input {

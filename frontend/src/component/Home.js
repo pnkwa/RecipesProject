@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 
 function Home({ className }) {
+
   const [data, setData] = useState([]);
   const [selectType, setSelectType] = useState(null);
   const [selectOptions, setSelectOptions] = useState(null);
@@ -205,7 +206,7 @@ function Home({ className }) {
             </div>
             {/* time */}
             <div className="time">
-              <label>
+              <label htmlFor="range">
                 <h2>Time</h2>
               </label>
 
@@ -214,7 +215,7 @@ function Home({ className }) {
                   type="range"
                   min="0"
                   max="180"
-                  value={sliderValue}
+                  defaultValue={sliderValue}
                   className="slider"
                   ref={sliderRef}
                 />

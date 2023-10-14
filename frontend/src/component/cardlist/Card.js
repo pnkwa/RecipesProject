@@ -10,7 +10,7 @@ function Card({ recipeData, className }) {
         <div className="recipe_img">
           <img src={recipeData.image[0]} alt="img" />
         </div>
-        <p>{recipeData.name}</p>
+        <p>{recipeData.title}</p>
         <Link to={`/recipes/${recipeData.id}`}>
           <button type="submit">Check Out</button>
         </Link>

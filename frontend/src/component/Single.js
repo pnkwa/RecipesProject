@@ -34,14 +34,34 @@ function Single({ className }) {
   if (!recipeData) {
     return <div>No recipe data available.</div>;
   }
-  const total = recipeData.prep + recipeData.cook;
+  const total = recipeData.prepTime + recipeData.cookTime;
+  // Format createdAt
+  const formatCreatedAt = (createdAt) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const date = new Date(createdAt);
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  //delete recipe
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete this recipe?")) {
+      axios
+        .delete(`http://localhost:8000/recipes/${id}`)
+        .then((response) => {
+          window.location.href = "/";
+        })
+        .catch((error) => {
+          console.error("Error deleting recipe:", error);
+        });
+    }
+  };
 
   return (
     <div className={className}>
       <div className="recipe_name">
         <p>By {recipeData.author}</p>
-        <h1>{recipeData.name}</h1>
-        <p>{recipeData.date}</p>
+        <h1>{recipeData.title}</h1>
+        <p>{formatCreatedAt(recipeData.createdAt)}</p>
       </div>
 
       <div className="top_banner">
@@ -85,12 +105,12 @@ function Single({ className }) {
       <div className="recipe_details">
         <h2>How To : Step by step</h2>
         <ol>
-          {recipeData.details.map((ingredient, index) => (
+          {recipeData.steps.map((ingredient, index) => (
             <li key={index}>{ingredient}</li>
           ))}
         </ol>
         <div className="editBtn">
-          <button type="submit">Delete Recipe</button>
+          <button onClick={handleDelete}>Delete Recipe</button>
           <Link to={`/edit/${id}`}>
             <button type="submit">Edit Recipe</button>
           </Link>

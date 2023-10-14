@@ -11,12 +11,12 @@ function Edit({ className }) {
   const [ingredients, setIngredients] = useState(["", "", ""]);
   const [steps, setSteps] = useState(["", "", ""]);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [recipeData, setRecipeData] = useState({
+  const [formData, setFormData] = useState({
     title: "",
-    image: ["", ""],
+    image: "",
     video: "",
-    ingredients: ["", "", ""],
-    steps: ["", "", ""],
+    ingredients: [],
+    steps: [],
     prepTime: "",
     cookTime: "",
     level: "easy",
@@ -25,10 +25,6 @@ function Edit({ className }) {
     options: "",
     author: "",
   });
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const baseURL = "http://127.0.0.1:8000/recipes";
 
   // Function to add a new ingredient field
   const handleAddIngredient = () => {
@@ -56,45 +52,75 @@ function Edit({ className }) {
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/${id}`)
+      .get(`http://localhost:8000/recipes/${id}`)
       .then((response) => {
-        setRecipeData(response.data);
-        setLoading(false);
+        const apiData = response.data;
+
+        // Update the formData state with data from the API
+        setFormData({
+          title: apiData.title,
+          image: apiData.image,
+          video: apiData.video,
+          ingredients: apiData.ingredients,
+          steps: apiData.steps,
+          prepTime: apiData.prepTime,
+          cookTime: apiData.cookTime,
+          level: apiData.level,
+          serving: apiData.serving,
+          type: apiData.type,
+          options: apiData.options,
+          author: apiData.author,
+        });
       })
       .catch((error) => {
-        setError(error);
-        setLoading(false);
+        console.error("Error fetching recipe:", error);
       });
   }, [id]);
 
-  const handleUpdate = (e) => {
-    axios
-      .put(`${baseURL}/${id}`, {
-        ...recipeData,
-        [e.target.name]: e.target.value,
-      })
-      .then((response) => {
-        console.log("Recipe updated:", response.data);
-        window.location.href = `/recipes/${id}`;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "image1" || name === "image2") {
+      // Handle image inputs
+      const imageIndex = name === "image1" ? 0 : 1;
+      const newImages = [...formData.image];
+      newImages[imageIndex] = value;
+      setFormData({
+        ...formData,
+        image: newImages,
       });
+    } else if (name === "author" || name === "serving" || name === "options") {
+      // Handle author, serving, and options inputs
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    } else if (name.startsWith("ingredient")) {
+      // Handle ingredients inputs
+      const ingredientIndex = parseInt(name.match(/\d+/)[0]);
+      const newIngredients = [...formData.ingredients];
+      newIngredients[ingredientIndex] = value;
+      setFormData({
+        ...formData,
+        ingredients: newIngredients,
+      });
+    } else if (name.startsWith("step")) {
+      // Handle steps inputs
+      const stepIndex = parseInt(name.match(/\d+/)[0]);
+      const newSteps = [...formData.steps];
+      newSteps[stepIndex] = value;
+      setFormData({
+        ...formData,
+        steps: newSteps,
+      });
+    } else {
+      // Handle other inputs
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
-  const [formData, setFormData] = useState({
-    title: "",
-    image: [""],
-    video: "",
-    ingredients: [],
-    steps: [],
-    prepTime: "",
-    cookTime: "",
-    level: "easy",
-    serving: "",
-    type: "breakfast",
-    options: "",
-    author: "",
-  });
-
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -110,9 +136,10 @@ function Edit({ className }) {
       "author",
     ];
 
-    const emptyFields = requiredFields.filter(
-      (field) => formData[field].trim() === ""
-    );
+    const emptyFields = requiredFields.filter((field) => {
+      const value = formData[field];
+      return typeof value === "string" && value.trim() === "";
+    });
 
     if (emptyFields.length > 0) {
       alert(`Please fill in all required fields: ${emptyFields.join(", ")}`);
@@ -129,8 +156,8 @@ function Edit({ className }) {
     }
 
     try {
-      const response = await Axios.post(
-        `${baseURL}`,
+      const response = await Axios.put(
+        `http://localhost:8000/recipes/${id}`,
         formData,
         {
           headers: {
@@ -139,17 +166,18 @@ function Edit({ className }) {
         }
       );
 
-      if (!response.status === 200) {
-        throw new Error(
-          `Network response was not ok: ${response.status} - ${response.statusText}`
+      if (response.status === 200) {
+        console.log("Recipe updated successfully:", response.data);
+        setIsSuccess(true);
+        window.alert("Recipe Edited successfully!");
+        window.location.href = `/recipes/${id}`;
+      } else {
+        console.error(
+          `Update failed: ${response.status} - ${response.statusText}`
         );
       }
-
-      const data = response.data;
-      console.log("Recipe saved:", data);
-      setIsSuccess(true);
     } catch (error) {
-      console.error("Error saving recipe:", error);
+      console.error("Error updating recipe:", error);
     }
   };
 
@@ -168,14 +196,18 @@ function Edit({ className }) {
 
           <div className="section_1">
             <div>
-              <h2>Recipe Title</h2>
-              <input
-                type="text"
-                name="title"
-                value={recipeData ? recipeData.title : ""}
-                placeholder="Give your recipe a title"
-                onChange={handleUpdate}
-              />
+              <div className="title">
+                <h2>Recipe Title</h2>
+                <div className="typetitle">
+                  <input
+                    type="text"
+                    name="title"
+                    placeholder="Give your recipe a title"
+                    value={formData.title}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
             </div>
             <div>
               <div className="photo">
@@ -185,8 +217,8 @@ function Edit({ className }) {
                     type="text"
                     name="image1"
                     placeholder="Add image url"
-                    value={recipeData.image[0]} // Update the value to use an array
-                    onChange={handleUpdate}
+                    value={formData.image[0]}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="typephoto">
@@ -194,8 +226,8 @@ function Edit({ className }) {
                     type="text"
                     name="image2"
                     placeholder="Add image url"
-                    value={recipeData.image[1]} // Update the value to use an array
-                    onChange={handleUpdate}
+                    value={formData.image[1]}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -207,8 +239,8 @@ function Edit({ className }) {
                     type="text"
                     name="video"
                     placeholder="Add video url"
-                    value={recipeData.video}
-               
+                    value={formData.video}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -223,14 +255,14 @@ function Edit({ className }) {
               different parts of the recipe.
             </p>
             <h3>Enter ingredients below</h3>
-            { ingredients.map((ingredient, index) => (
+            {ingredients.map((ingredient, index) => (
               <div key={index} className="typeingre">
                 <input
                   type="text"
                   placeholder="e.g. 2 cups flour"
-                  value={recipeData.ingredients[index]}
+                  value={formData.ingredients[index]}
                   onChange={(e) => {
-                    const newIngredients = [...recipeData.ingredients];
+                    const newIngredients = [...formData.ingredients];
                     newIngredients[index] = e.target.value;
                     setFormData({
                       ...formData,
@@ -262,7 +294,7 @@ function Edit({ className }) {
               <div key={index} className="typedirec">
                 <p>Step {index + 1}</p>
                 <textarea
-                  value={recipeData.steps[index] || ''}
+                  value={formData.steps[index]}
                   onChange={(e) => {
                     const newSteps = [...formData.steps];
                     newSteps[index] = e.target.value;
@@ -292,8 +324,8 @@ function Edit({ className }) {
                   type="text"
                   name="prepTime"
                   placeholder="0"
-                  value={recipeData.prepTime}
-             
+                  value={formData.prepTime}
+                  onChange={handleChange}
                 />
                 <label htmlFor="preptime">min</label>
               </div>
@@ -303,8 +335,8 @@ function Edit({ className }) {
                   type="text"
                   name="cookTime"
                   placeholder="0"
-                  value={recipeData.cookTime}
-
+                  value={formData.cookTime}
+                  onChange={handleChange}
                 />
                 <label htmlFor="cooktime">min</label>
               </div>
@@ -315,7 +347,7 @@ function Edit({ className }) {
                 <label htmlFor="level">
                   <h2>Level</h2>
                 </label>
-                <select id="level" name="level" value={recipeData.level}>
+                <select id="level" name="level">
                   <option value="easy">Easy</option>
                   <option value="Medium">Medium</option>
                   <option value="hard">Hard</option>
@@ -329,8 +361,8 @@ function Edit({ className }) {
                 <select
                   id="recipe-type"
                   name="type"
-                  value={recipeData.type}
-        
+                  value={formData.type}
+                  onChange={handleChange}
                 >
                   <option value="breakfast">Breakfast</option>
                   <option value="lunch">Lunch</option>
@@ -352,8 +384,8 @@ function Edit({ className }) {
                   type="text"
                   name="serving"
                   placeholder="0"
-                  value={recipeData.serving}
-     
+                  value={formData.serving}
+                  onChange={handleChange}
                 />
               </div>
               <div className="selectBox">
@@ -362,11 +394,11 @@ function Edit({ className }) {
                 </label>
                 <select
                   id="recipe-options"
-                  name="opt"
-                  value={recipeData.options}
-         
+                  name="options"
+                  value={formData.options}
+                  onChange={handleChange}
                 >
-                  <option value="nonspicy">Non-Spicy</option>
+                  <option value="non-spicy">Non-Spicy</option>
                   <option value="spicy">Spicy</option>
                   <option value="vegetarian">Vegetarian</option>
                   <option value="vegan">Vegan</option>
@@ -381,13 +413,13 @@ function Edit({ className }) {
               type="text"
               name="author"
               placeholder="Your name"
-              value={recipeData.author}
-   
+              value={formData.author}
+              onChange={handleChange}
             />
           </div>
 
           <div className="section_6">
-            <Link to={"/"}>
+            <Link to={`/recipes/${id}`}>
               <button className="cancel-button" type="button">
                 Cancel {/* Use type="reset" to reset the form */}
               </button>
@@ -398,9 +430,9 @@ function Edit({ className }) {
           </div>
         </div>
       </form>
-      {isSuccess && (
-        <div className="success-message">Recipe saved successfully!</div>
-      )}
+      {/* {isSuccess && (
+        <div className="success-message">Recipe Edited successfully!</div>
+      )} */}
     </div>
   );
 }
@@ -554,6 +586,7 @@ export default styled(Edit)`
     outline: none;
     resize: none;
     background-color: #fff;
+    font-family: "Inter", sans-serif;
   }
 
   .container .section_3 textarea::placeholder {

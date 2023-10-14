@@ -1,83 +1,111 @@
 const express = require("express");
 const router = express.Router();
-const { comments } = require("../commentData");
-
-let currentcommentId = 5;
+const Comments = require("../model/commentsModel");
 
 //get all comments in recipe by id
-router.get("/:idRecipe/comments", (req, res) => {
-  const idRecipe = Number.parseInt(req.params.idRecipe);
-  const recipeComments = comments.filter(
-    (comment) => comment.idRecipe === idRecipe
-  );
-  if (recipeComments.length === 0) {
-    return res.json({ message: "No comments found for this recipe" });
+router.get("/:idRecipe/comments", async (req, res) => {
+  try {
+    const idRecipe = Number.parseInt(req.params.idRecipe);
+    const recipeComments = await Comments.findAll({
+      where: {
+        idRecipe: idRecipe,
+      },
+    });
+
+    if (recipeComments.length === 0) {
+      return res.json({ message: "No comments found for this recipe" });
+    }
+
+    res.json(recipeComments);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
   }
-  res.json(recipeComments);
 });
 
 //create a comment in recipe by id
-router.post("/:idRecipe/comments", (req, res) => {
-  const idRecipe = Number.parseInt(req.params.idRecipe);
-  const { text, user } = req.body;
+router.post("/:idRecipe/comments", async (req, res) => {
+  try {
+    const idRecipe = Number.parseInt(req.params.idRecipe);
+    const { text, user } = req.body;
 
-  const newCommentId = currentcommentId++;
-  const timestamp = new Date().toISOString();
+    const newComment = await Comments.create({
+      idRecipe,
+      text,
+      user,
+    });
 
-  const newComment = {
-    id: newCommentId,
-    idRecipe: idRecipe,
-    text,
-    user,
-    timestamp,
-  };
-
-  comments.push(newComment);
-  res.json(newComment);
+    res.json(newComment);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
-router.put("/:idRecipe/comments/:id", (req, res) => {
-  const idRecipe = Number.parseInt(req.params.idRecipe);
-  const id = Number.parseInt(req.params.id);
-  const { text } = req.body;
+router.put("/:idRecipe/comments/:id", async (req, res) => {
+  try {
+    const idRecipe = Number.parseInt(req.params.idRecipe);
+    const id = Number.parseInt(req.params.id);
+    const { text } = req.body;
 
-  const timestamp = new Date().toISOString();
-  const comment = comments.find(
-    (comment) => comment.id === id && comment.idRecipe === idRecipe
-  );
-  if (!comment) {
-    return res.status(404).json({ message: "Comment not found" });
+    const [rowsUpdated, [updatedComment]] = await Comments.update(
+      { text },
+      {
+        where: { id, idRecipe },
+        returning: true,
+      }
+    );
+
+    if (rowsUpdated === 0) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    res.json(updatedComment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
-  comment.text = text;
-  comment.timestamp = timestamp;
-  res.json(comment);
 });
 
 //delete  all comments in recipe by id
-router.delete("/:idRecipe/comments", (req, res) => {
-  const idRecipe = Number.parseInt(req.params.idRecipe);
+router.delete("/:idRecipe/comments", async (req, res) => {
+  try {
+    const idRecipe = Number.parseInt(req.params.idRecipe);
 
-  const deletedComments = comments.filter(
-    (comment) => comment.idRecipe !== idRecipe
-  );
-  comments = deletedComments;
+    await Comments.destroy({
+      where: {
+        idRecipe: idRecipe,
+      },
+    });
+    res.json({ message: "All comments deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 //delete a comment in recipe by id
-router.delete("/:idRecipe/comments/:id", (req, res) => {
-  const idRecipe = Number.parseInt(req.params.idRecipe);
-  const id = Number.parseInt(req.params.id);
+router.delete("/:idRecipe/comments/:id", async (req, res) => {
+  try {
+    const idRecipe = Number.parseInt(req.params.idRecipe);
+    const id = Number.parseInt(req.params.id);
 
-  const commentIndex = comments.findIndex(
-    (comment) =>
-      comment.id === id && comment.idRecipe === idRecipe
-  );
-  if (commentIndex === -1) {
-    return res.status(404).json({ message: "Comment not found" });
+    const deletedCount = await Comments.destroy({
+      where: {
+        id: id,
+        idRecipe: idRecipe,
+      },
+    });
+
+    if (deletedCount === 0) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    res.json({ message: "Comment deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
   }
-  comments.splice(commentIndex, 1);
-
-  res.json({ message: "Comment deleted" });
 });
 
 module.exports = router;

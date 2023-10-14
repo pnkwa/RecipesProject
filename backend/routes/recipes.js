@@ -8,6 +8,8 @@ router.get("/", async (req, res) => {
   const options = req.query.options;
   const level = req.query.level;
   const title = req.query.title;
+  const total = req.query.total;
+
   // Filter recipes based on query parameters
   // Example URL: http://localhost:3000/recipes?options=vegetarian
   let recipesList = await Recipes.findAll();
@@ -24,32 +26,37 @@ router.get("/", async (req, res) => {
   }
   //get recipes by level
   if (level) {
-    recipesList = recipesList.filter(
-      (recipe) => recipe.level === level
-    );
+    recipesList = recipesList.filter((recipe) => recipe.level === level);
   }
   //get recipes by title
   if (title) {
     recipesList = recipesList.filter((recipe) =>
       recipe.title.toLowerCase().includes(title.toLowerCase())
     );
+
+    //Get recipes by total time (cook + prep)
+    if (total) {
+      filteredRecipes = filteredRecipes.filter(
+        (recipe) => recipe.prep + recipe.cook <= Number(total)
+      );
+    }
   }
   // Return all recipes if no query parameters are specified
   res.json(recipesList);
 });
 
 //get recipes by id
-router.get("/:id", async(req, res) => {
+router.get("/:id", async (req, res) => {
   const recipe = await Recipes.findOne({
     where: {
       id: req.params.id,
     },
-  })
+  });
   res.json(recipe);
 });
 
 //create recipe
-router.post("/", async(req, res) => {
+router.post("/", async (req, res) => {
   const {
     title,
     description,
@@ -65,7 +72,6 @@ router.post("/", async(req, res) => {
     video,
     image,
   } = req.body;
-
 
   const recipe = await Recipes.create({
     title,
@@ -88,7 +94,7 @@ router.post("/", async(req, res) => {
 });
 
 //update recipes by id
-router.put("/:id", async(req, res) => {
+router.put("/:id", async (req, res) => {
   const {
     title,
     description,
@@ -103,14 +109,13 @@ router.put("/:id", async(req, res) => {
     level,
     video,
     image,
-
   } = req.body;
 
   const recipe = await Recipes.findOne({
     where: {
       id: req.params.id,
-    }
-  })
+    },
+  });
 
   // const recipeIndex = Recipes.findIndex(
   //   (recipe) => recipe.id === req.params.id
@@ -121,7 +126,7 @@ router.put("/:id", async(req, res) => {
   // }
 
   recipe.title = title;
-  recipe.description = description
+  recipe.description = description;
   recipe.type = type;
   recipe.prepTime = prepTime;
   recipe.cookTime = cookTime;
@@ -142,16 +147,15 @@ router.put("/:id", async(req, res) => {
 
   //res.json(recipe[recipeIndex]);
   res.json(recipe);
-  
 });
 
 //delete recipe by id
-router.delete("/:id", async(req, res) => {
+router.delete("/:id", async (req, res) => {
   await Recipes.destroy({
     where: {
       id: req.params.id,
-    }
-  })
+    },
+  });
 
   res.sendStatus(204);
 });

@@ -38,6 +38,7 @@ Recipes = sequelize.define("Recipes", {
   image: {
     type: DataTypes.ARRAY(DataTypes.STRING), // Use ARRAY for an array of images
   },
+  
 });
 
 module.exports = Recipes;

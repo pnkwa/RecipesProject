@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const recipesRoutes = require("./routes/recipes");
 const commentRoutes = require("./routes/comments");
+const requestRoutes = require("./routes/requests");
 const { connect, sync } = require("./config/dbRecipes");
 const cors = require("cors");
 
@@ -24,5 +25,6 @@ app.listen(8000, () => {
 });
 
 app.use("/recipes", recipesRoutes);
-app.use("/recipes", commentRoutes)
+app.use("/recipes", commentRoutes);
+app.use("/recipes/admin", requestRoutes);
 

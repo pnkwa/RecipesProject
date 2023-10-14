@@ -18,6 +18,7 @@ function Search({ className }) {
       const apiURL = `${baseURL}?title=${search}`;
       axios.get(apiURL).then((res) => {
         setName(res.data);
+        console.log(name);
       });
     }
   }, [search]);

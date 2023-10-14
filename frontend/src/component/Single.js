@@ -66,7 +66,7 @@ function Single({ className }) {
 
       <div className="top_banner">
         <div className="type_cir">
-          <h3>TYPE {recipeData.type}</h3>
+          <h3>Type: {recipeData.type}<br/>Level: {recipeData.level}<br/>Options: {recipeData.options}</h3>
         </div>
         <div className="slideshow">
           <img src={recipeData.image[0]} alt="img" />
@@ -81,10 +81,10 @@ function Single({ className }) {
           <img src={recipeData.image[1]} alt="img" />
           <div className="time_details">
             <div>
-              <p>Prep time {recipeData.prep} mins</p>
+              <p>Prep time {recipeData.prepTime} mins</p>
             </div>
             <div>
-              <p>Cook time {recipeData.cook} mins</p>
+              <p>Cook time {recipeData.cookTime} mins</p>
             </div>
             <div>
               <p>Serving {recipeData.serving} serving</p>

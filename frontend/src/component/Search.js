@@ -5,44 +5,59 @@ import PropTypes from "prop-types";
 import axios from "axios";
 
 function Search({ className }) {
-  const [search, setSearch] = useState("");
-  const [name, setName] = useState([]);
-  const baseURL = "http://127.0.0.1:8000/recipes";
-
-  const handleSearchChange = (e) => {
-    setSearch(e);
-  };
+  const [value, setValue] = useState("");
+  const [data, setData] = useState([]);
+  const baseURL = "http://localhost:8000/recipes";
 
   useEffect(() => {
-    if (search) {
-      const apiURL = `${baseURL}?title=${search}`;
-      axios.get(apiURL).then((res) => {
-        setName(res.data);
-        console.log(name);
-      });
-    }
-  }, [search]);
+    // Fetch data and store it in the 'data' state
+    axios
+      .get(`${baseURL}`)
+      .then((response) => setData(response.data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  const handleOnChange = (event) => {
+    setValue(event.target.value);
+  };
+  const onSearch = (searchText) => {
+    setValue(searchText);
+  };
 
   return (
     <div className={className}>
-      <form action="" className="searchbar">
+      <div class="searchbar">
         <input
           type="text"
           placeholder="Look for yummy recipes!"
-          onChange={(e) => handleSearchChange(e.target.value)}
+          value={value}
+          onChange={handleOnChange}
         />
-        {name && name[0] && name[0].id ? (
-          <Link to={`/recipes/${name[0].id}`}>
-            <button type="submit">
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </Link>
-        ) : (
-          <button type="submit" disabled aria-label="Search">
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </button>
-        )}
-      </form>
+      </div>
+      <div class="dropdown">
+        {data
+          .filter((item) => {
+            const searchText = value.toLowerCase();
+            const name = item.title.toLowerCase();
+
+            return (
+              searchText && name.startsWith(searchText) && name !== searchText
+            );
+          })
+          .map((item) => (
+            <div
+              key={item.id}
+              onClick={() => {
+                onSearch(item.title);
+              }}
+              class="dropdown-row"
+            >
+              <Link to={`/recipes/${item.id}`} class="selection-recipe">
+                {item.title}
+              </Link>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
@@ -53,6 +68,7 @@ Search.propTypes = {
 export default styled(Search)`
   .searchbar {
     background: #fff;
+    display: flex;
     border-radius: 60px;
   }
   .searchbar input {
@@ -91,5 +107,30 @@ export default styled(Search)`
     background-color: #fdee82;
     color: #e23c34;
     border: 1px solid #e23c34;
+  }
+
+  .dropdown {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+  }
+  .dropdown:empty {
+    border: none;
+  }
+  .dropdown-row {
+    cursor: pointer;
+    text-align: center;
+    margin: 2px 0;
+    padding: 10px;
+    border-radius: 20px;
+  }
+  .dropdown-row:hover {
+    background-color:  #fdee82;
+    transition: 0.3s ease, color 0.3s ease;
+  }
+  .selection-recipe {
+    color: black;
+    text-decoration: none;
   }
 `;

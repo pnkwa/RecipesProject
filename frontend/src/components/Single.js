@@ -82,10 +82,10 @@ function Single({ className }) {
           <img src={recipeData.image[1]} alt="img" />
           <div className="time_details">
             <div>
-              <p>Prep time {recipeData.prep} mins</p>
+              <p>Prep time {recipeData.prepTime} mins</p>
             </div>
             <div>
-              <p>Cook time {recipeData.cook} mins</p>
+              <p>Cook time {recipeData.cookTime} mins</p>
             </div>
             <div>
               <p>Serving {recipeData.serving} serving</p>

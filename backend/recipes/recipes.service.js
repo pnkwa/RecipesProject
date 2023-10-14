@@ -1,9 +1,4 @@
-const express = require("express");
-const router = express.Router();
-const Recipes = require("../model/recipesModel");
-
-//get all recipes
-router.get("/", async (req, res) => {
+async function findAllRecipes(req, res) {
   const type = req.query.type;
   const options = req.query.options;
   const level = req.query.level;
@@ -11,7 +6,7 @@ router.get("/", async (req, res) => {
   const total = req.query.total;
 
   // Filter recipes based on query parameters
-  // Example URL: http://localhost:3000/recipes?options=vegetarian
+  // Example URL: http://localhost:8000/recipes?options=vegetarian
   let recipesList = await Recipes.findAll();
 
   //get recipes by type
@@ -37,27 +32,25 @@ router.get("/", async (req, res) => {
 
   // Filter recipes by total time (prep + cook)
   if (total) {
-    recipesList = recipesList.filter((recipe) =>
-      (recipe.prepTime + recipe.cookTime) <= Number(total)
+    recipesList = recipesList.filter(
+      (recipe) => recipe.prepTime + recipe.cookTime <= Number(total)
     );
   }
 
   // Return all recipes if no query parameters are specified
   res.json(recipesList);
-});
+}
 
-//get recipes by id
-router.get("/:id", async (req, res) => {
+async function findRecipe(req, res) {
   const recipe = await Recipes.findOne({
     where: {
       id: req.params.id,
     },
   });
   res.json(recipe);
-});
+}
 
-//create recipe
-router.post("/", async (req, res) => {
+async function createRecipe(req, res) {
   const {
     title,
     description,
@@ -92,10 +85,9 @@ router.post("/", async (req, res) => {
 
   //data.push(recipe);
   res.json(recipe);
-});
+}
 
-//update recipes by id
-router.put("/:id", async (req, res) => {
+async function updateRecipe(req, res) {
   const {
     title,
     description,
@@ -148,25 +140,22 @@ router.put("/:id", async (req, res) => {
 
   //res.json(recipe[recipeIndex]);
   res.json(recipe);
-});
+}
 
-//delete recipe by id
-router.delete("/:id", async (req, res) => {
-  await Recipes.destroy({
-    where: {
-      id: req.params.id,
-    },
-  });
+async function deleteRecipe(req, res) {
+    await Recipes.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+    
+      res.sendStatus(204);
+}
 
-  res.sendStatus(204);
-});
-
-//get recipes by type
-
-//get recipes by options
-
-//get recipes by level
-
-//get recipes by search
-
-module.exports = router;
+module.exports = {
+  findAllRecipes,
+  findRecipe,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe,
+};

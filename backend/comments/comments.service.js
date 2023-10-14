@@ -1,9 +1,5 @@
-const express = require("express");
-const router = express.Router();
-const Comments = require("../model/commentsModel");
-
 //get all comments in recipe by id
-router.get("/:idRecipe/comments", async (req, res) => {
+async function findAllComments(req, res) {
   try {
     const idRecipe = Number.parseInt(req.params.idRecipe);
     const recipeComments = await Comments.findAll({
@@ -21,10 +17,10 @@ router.get("/:idRecipe/comments", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
-});
+}
 
 //create a comment in recipe by id
-router.post("/:idRecipe/comments", async (req, res) => {
+async function createComment(req, res) {
   try {
     const idRecipe = Number.parseInt(req.params.idRecipe);
     const { text, user } = req.body;
@@ -40,9 +36,10 @@ router.post("/:idRecipe/comments", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
-});
+}
 
-router.patch("/:idRecipe/comments/:id", async (req, res) => {
+//update a comment in recipe by id
+async function updateComment(req, res) {
   try {
     const idRecipe = Number.parseInt(req.params.idRecipe);
     const id = Number.parseInt(req.params.id);
@@ -65,10 +62,10 @@ router.patch("/:idRecipe/comments/:id", async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
-});
+}
 
 //delete  all comments in recipe by id
-router.delete("/:idRecipe/comments", async (req, res) => {
+async function deleteAllComments(req, res) {
   try {
     const idRecipe = Number.parseInt(req.params.idRecipe);
 
@@ -82,10 +79,10 @@ router.delete("/:idRecipe/comments", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
-});
+}
 
 //delete a comment in recipe by id
-router.delete("/:idRecipe/comments/:id", async (req, res) => {
+async function deleteComment(req, res) {
   try {
     const idRecipe = Number.parseInt(req.params.idRecipe);
     const id = Number.parseInt(req.params.id);
@@ -106,6 +103,12 @@ router.delete("/:idRecipe/comments/:id", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
-});
+}
 
-module.exports = router;
+module.exports = {
+  findAllComments,
+  createComment,
+  updateComment,
+  deleteAllComments,
+  deleteComment,
+};

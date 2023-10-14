@@ -3,39 +3,61 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { useGlobalContext } from "../context/global";
 
 function Search({ className }) {
-  const { handleSearchChange, search } = useGlobalContext();
-
-  const [name, setName] = useState([]);
-  const baseURL = "http://127.0.0.1:8000/recipes";
+  const [value, setValue] = useState("");
+  const [data, setData] = useState([]);
+  const baseURL = "http://localhost:8000/recipes";
 
   useEffect(() => {
-    if (search) {
-      const apiURL = `${baseURL}?name=${search}`;
-      axios.get(apiURL).then((res) => {
-        setName(res.data);
-      });
-    }
-  }, [search]);
+    // Fetch data and store it in the 'data' state
+    axios
+      .get(`${baseURL}`)
+      .then((response) => setData(response.data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  const handleOnChange = (event) => {
+    setValue(event.target.value);
+  };
+  const onSearch = (searchText) => {
+    setValue(searchText);
+  };
 
   return (
     <div className={className}>
-      <form action="" class="searchbar">
+      <div class="searchbar">
         <input
           type="text"
           placeholder="Look for yummy recipes!"
-          onChange={(e) => handleSearchChange(e.target.value)}
+          value={value}
+          onChange={handleOnChange}
         />
-        {/* problem here */}
-        <Link to={`/recipes/${name[0].id}`}>
-          {/* problem here */}
-          <button type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </Link>
-      </form>
+      </div>
+      <div class="dropdown">
+        {data
+          .filter((item) => {
+            const searchText = value.toLowerCase();
+            const name = item.name.toLowerCase();
+
+            return (
+              searchText && name.startsWith(searchText) && name !== searchText
+            );
+          })
+          .map((item) => (
+            <div
+              key={item.id}
+              onClick={() => {
+                onSearch(item.name);
+              }}
+              class="dropdown-row"
+            >
+              <Link to={`/recipes/${item.id}`} class="selection-recipe">
+                {item.name}
+              </Link>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
@@ -85,5 +107,24 @@ export default styled(Search)`
     background-color: #fdee82;
     color: #e23c34;
     border: 1px solid #e23c34;
+  }
+
+  .dropdown {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+  }
+  .dropdown:empty {
+    border: none;
+  }
+  .dropdown-row {
+    cursor: pointer;
+    text-align: center;
+    margin: 2px 0;
+  }
+  .selection-recipe {
+    color: black;
+    text-decoration: none;
   }
 `;

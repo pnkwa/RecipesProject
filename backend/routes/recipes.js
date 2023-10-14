@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
   const type = req.query.type;
   const options = req.query.options;
   const level = req.query.level;
-  const title = req.query.title;
+  const name = req.query.name;
   const total = req.query.total;
   const author = req.query.author;
 
@@ -29,10 +29,10 @@ router.get("/", async (req, res) => {
   if (level) {
     recipesList = recipesList.filter((recipe) => recipe.level === level);
   }
-  //get recipes by title
-  if (title) {
+  //get recipes by name
+  if (name) {
     recipesList = recipesList.filter((recipe) =>
-      recipe.title.toLowerCase().includes(title.toLowerCase())
+      recipe.title.toLowerCase().includes(name.toLowerCase())
     );
   }
 

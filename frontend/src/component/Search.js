@@ -26,7 +26,8 @@ function Search({ className }) {
 
   return (
     <div className={className}>
-      <div class="searchbar">
+      <div className="searchbar">
+      <i className="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
           placeholder="Look for yummy recipes!"
@@ -34,7 +35,7 @@ function Search({ className }) {
           onChange={handleOnChange}
         />
       </div>
-      <div class="dropdown">
+      <div className="dropdown">
         {data
           .filter((item) => {
             const searchText = value.toLowerCase();
@@ -50,9 +51,9 @@ function Search({ className }) {
               onClick={() => {
                 onSearch(item.title);
               }}
-              class="dropdown-row"
+              className="dropdown-row"
             >
-              <Link to={`/recipes/${item.id}`} class="selection-recipe">
+              <Link to={`/recipes/${item.id}`} className="selection-recipe">
                 {item.title}
               </Link>
             </div>
@@ -70,6 +71,8 @@ export default styled(Search)`
     background: #fff;
     display: flex;
     border-radius: 60px;
+    position: relative;
+    z-index:1;
   }
   .searchbar input {
     background: transparent;
@@ -78,42 +81,27 @@ export default styled(Search)`
     outline: none;
     font-size: 15px;
     height: 40px;
-    margin-left: 10px;
+
   }
   .searchbar ::placeholder {
     color: #ababab;
   }
 
-  .searchbar button i {
-    width: 30px;
-    height: 30px;
-    background: #e23c34;
-    color: #fff;
-    padding: 8px;
+  .searchbar i {
+    display: flex;
+    align-items: center;
+    color: #eee;
+    padding: 10px;
     border-radius: 50%;
-    margin-right: 5px;
-    border: 1px solid #e23c34;
-    transition: 0.3s ease, color 0.3s ease;
-  }
-
-  .searchbar button {
-    border: 0;
-    border-radius: 50%;
-    cursor: pointer;
-    background: transparent;
-  }
-
-  .searchbar button:hover i {
-    background-color: #fdee82;
-    color: #e23c34;
-    border: 1px solid #e23c34;
   }
 
   .dropdown {
     background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    border-radius: 20px;
+    border-radius: 10px;
+    top: 60px;
+    position: absolute;
+    overflow-y: auto;
+    padding: 5px
   }
   .dropdown:empty {
     border: none;
@@ -122,11 +110,13 @@ export default styled(Search)`
     cursor: pointer;
     text-align: center;
     margin: 2px 0;
-    padding: 10px;
+    padding: 5px;
     border-radius: 20px;
+    width: 220px;
   }
   .dropdown-row:hover {
     background-color:  #fdee82;
+    border-radius: 15px;
     transition: 0.3s ease, color 0.3s ease;
   }
   .selection-recipe {

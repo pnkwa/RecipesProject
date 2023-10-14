@@ -5,6 +5,7 @@ import NotFound from "./NotFound";
 import axios from "axios";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import YouTube from "react-youtube";
 
 function Single({ className }) {
   const { id } = useParams();
@@ -56,6 +57,11 @@ function Single({ className }) {
     }
   };
 
+  function getVideoIdFromURL(url) {
+    const videoId = url.split("/").pop().split("?")[0] + "?showinfo=0";
+    return videoId;
+  }
+
   return (
     <div className={className}>
       <div className="recipe_name">
@@ -66,7 +72,13 @@ function Single({ className }) {
 
       <div className="top_banner">
         <div className="type_cir">
-          <h3>Type: {recipeData.type}<br/>Level: {recipeData.level}<br/>Options: {recipeData.options}</h3>
+          <h3>
+            Type: {recipeData.type}
+            <br />
+            Level: {recipeData.level}
+            <br />
+            Options: {recipeData.options}
+          </h3>
         </div>
         <div className="slideshow">
           <img src={recipeData.image[0]} alt="img" />
@@ -104,6 +116,11 @@ function Single({ className }) {
 
       <div className="recipe_details">
         <h2>How To : Step by step</h2>
+        <div className="video">
+          {recipeData.video != null && (
+            <YouTube videoId={getVideoIdFromURL(recipeData.video)} />
+          )}
+        </div>
         <ol>
           {recipeData.steps.map((ingredient, index) => (
             <li key={index}>{ingredient}</li>
@@ -250,6 +267,10 @@ export default styled(Single)`
     padding: 5px;
     text-align: center;
     width: 60%;
+  }
+
+  .video {
+    margin: 30px;
   }
 
   .recipe_details {

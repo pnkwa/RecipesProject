@@ -31,7 +31,7 @@ RecipesCard.propTypes = {
 
 export default styled(RecipesCard)`
   .recipes_cards {
-    width: 100%;
+    width: 900px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;

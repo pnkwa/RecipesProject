@@ -7,9 +7,8 @@ router.get("/", async (req, res) => {
   const type = req.query.type;
   const options = req.query.options;
   const level = req.query.level;
-  const name = req.query.name;
+  const title = req.query.name;
   const total = req.query.total;
-  const author = req.query.author;
 
   // Filter recipes based on query parameters
   // Example URL: http://localhost:3000/recipes?options=vegetarian
@@ -29,10 +28,10 @@ router.get("/", async (req, res) => {
   if (level) {
     recipesList = recipesList.filter((recipe) => recipe.level === level);
   }
-  //get recipes by name
-  if (name) {
+  //get recipes by title
+  if (title) {
     recipesList = recipesList.filter((recipe) =>
-      recipe.title.toLowerCase().includes(name.toLowerCase())
+      recipe.title.toLowerCase().includes(title.toLowerCase())
     );
   }
 
@@ -43,11 +42,6 @@ router.get("/", async (req, res) => {
     );
   }
 
-  if (author) {
-    recipesList = recipesList.filter((recipe) =>
-      recipe.author.toLowerCase().includes(author.toLowerCase())
-    );
-  }
   // Return all recipes if no query parameters are specified
   res.json(recipesList);
 });

@@ -6,9 +6,10 @@ import LevelSelector from "./LevelSelector";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import axios from "axios";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 function Home({ className }) {
-
   const [data, setData] = useState([]);
   const [selectType, setSelectType] = useState(null);
   const [selectOptions, setSelectOptions] = useState(null);
@@ -17,25 +18,27 @@ function Home({ className }) {
   useEffect(() => {
     if (selectType) {
       const apiURL = `${baseURL}?type=${selectType}`;
-      axios.get(apiURL)
-        .then(response => {
+      axios
+        .get(apiURL)
+        .then((response) => {
           setData(response.data);
         })
-        .catch(error => {
-          console.error('Error fetching data:', error);
+        .catch((error) => {
+          console.error("Error fetching data:", error);
         });
     }
   }, [selectType]);
-  
+
   useEffect(() => {
     if (selectOptions) {
       const apiURL = `${baseURL}?options=${selectOptions}`;
-      axios.get(apiURL)
-        .then(response => {
+      axios
+        .get(apiURL)
+        .then((response) => {
           setData(response.data);
         })
-        .catch(error => {
-          console.error('Error fetching data:', error);
+        .catch((error) => {
+          console.error("Error fetching data:", error);
         });
     }
   }, [selectOptions]);
@@ -48,6 +51,11 @@ function Home({ className }) {
     setSelectOptions(dishOptions);
   };
 
+
+  const handleSubmitReq = (e) => {
+    e.preventDefault();
+    
+  }
 
   return (
     <div className={className}>
@@ -88,25 +96,33 @@ function Home({ className }) {
 
       <div class="recipes_lists">
         <div class="optionsbar">
-          <button type="submit" onClick={() => handleOptions('spicy')}>Spicy</button>
-          <button type="submit" onClick={() => handleOptions('non-spicy')}>Non-spicy</button>
-          <button type="submit" onClick={() => handleOptions('vegetarian')}>Vegetarian</button>
-          <button type="submit" onClick={() => handleOptions('vegan')}>Vegan</button>
+          <button type="submit" onClick={() => handleOptions("spicy")}>
+            Spicy
+          </button>
+          <button type="submit" onClick={() => handleOptions("non-spicy")}>
+            Non-spicy
+          </button>
+          <button type="submit" onClick={() => handleOptions("vegetarian")}>
+            Vegetarian
+          </button>
+          <button type="submit" onClick={() => handleOptions("vegan")}>
+            Vegan
+          </button>
         </div>
 
         <div class="recipes_box">
           <div class="sidebar">
             <div class="type">
               <h2>Dish Type</h2>
-              <a onClick={() => handleType('breakfast')}>Breakfast</a>
-              <a onClick={() => handleType('lunch')}>Lunch</a>
-              <a onClick={() => handleType('dinner')}>Dinner</a>
-              <a onClick={() => handleType('appetizer')}>Appetizer</a>
-              <a onClick={() => handleType('salad')}>Salad</a>
-              <a onClick={() => handleType('main-course')}>Main-course</a>
-              <a onClick={() => handleType('baked-goods')}>Baked-goods</a>
-              <a onClick={() => handleType('dessert')}>Dessert</a>
-              <a onClick={() => handleType('soup')}>Soup</a>
+              <a onClick={() => handleType("breakfast")}>Breakfast</a>
+              <a onClick={() => handleType("lunch")}>Lunch</a>
+              <a onClick={() => handleType("dinner")}>Dinner</a>
+              <a onClick={() => handleType("appetizer")}>Appetizer</a>
+              <a onClick={() => handleType("salad")}>Salad</a>
+              <a onClick={() => handleType("main-course")}>Main-course</a>
+              <a onClick={() => handleType("baked-goods")}>Baked-goods</a>
+              <a onClick={() => handleType("dessert")}>Dessert</a>
+              <a onClick={() => handleType("soup")}>Soup</a>
             </div>
 
             <TimeSlider />
@@ -121,7 +137,35 @@ function Home({ className }) {
           "You've been trying to find a recipe, but you can't seem to find it in
           Recipe Box? Tell us!"
         </h2>
-        <button type="submit">Request recipe</button>
+        {/* <button type="submit">Request recipe</button> */}
+        <Popup
+          trigger={<button type="submit">Request recipe</button>}
+          modal
+          nested
+        >
+          {(close) => (
+            <div className="modal">
+              <div className="content">
+                <h1>Request recipe</h1>
+                <div>
+                  <div>
+                    <h3>Name</h3>
+                    <input type="text" />
+                  </div>
+                  <div>
+                    <h3>Request message</h3>
+                    <input type="text" />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <button onClick={() => close()}>Submit</button>
+                <button onClick={() => close()}>Close</button>
+              </div>
+            </div>
+          )}
+        </Popup>
       </div>
     </div>
   );

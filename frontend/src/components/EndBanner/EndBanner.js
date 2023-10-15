@@ -4,12 +4,15 @@ import PropTypes from "prop-types";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import axios from "axios";
+import ViewReq from "./ViewReq";
 
 function EndBanner({ className }) {
   const [reqForm, setReqForm] = useState({
     author: "",
     message: "",
   });
+  const [showThankYou, setShowThankYou] = useState(false); // State for showing "Thank you" message
+  const [popupOpen, setPopupOpen] = useState(false); // State for controlling the popup
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -19,24 +22,40 @@ function EndBanner({ className }) {
     });
   };
 
-  // Define the sendRequest function here
-  const sendRequest = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/recipes/admin/req",
-        {
-          author: reqForm.author,
-          message: reqForm.message,
-        }
-      );
-
-      if (response.status === 200) {
-        console.log("Message sent successfully!");
-      }
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
+  const closePopup = () => {
+    setPopupOpen(false);
   };
+
+  const sendRequest = () => {
+    const { author, message } = reqForm;
+    if (author.trim() === "" || message.trim() === "") {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    const newReq = {
+      author: author,
+      message: message,
+    };
+
+    axios
+
+      .post(`http://localhost:8000/recipes/admin/req`, newReq)
+      .then((response) => {
+        console.log("Request created:", response.data);
+
+        setReqForm({
+          author: "",
+          message: "",
+        });
+
+        setShowThankYou(true);
+      })
+      .catch((error) => {
+        console.error("Error creating request:", error);
+      });
+  };
+
   return (
     <div className={className}>
       <div className="end_banner">
@@ -48,40 +67,63 @@ function EndBanner({ className }) {
           trigger={<StyledButton type="submit">Request recipe</StyledButton>}
           modal
           nested
+          open={popupOpen}
+          onClose={closePopup}
         >
           {(close) => (
             <div className="modal">
               <div className="content">
-                <h1>Request recipe</h1>
-                <div>
-                  <div>
-                    <h3>Name</h3>
-                    <StyledInput
-                      type="text"
-                      name="author"
-                      value={reqForm.author}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div>
-                    <h3>Request message</h3>
-                    <StyledTextarea
-                      rows="4"
-                      name="message"
-                      value={reqForm.message}
-                      onChange={handleInputChange}
-                    ></StyledTextarea>
-                  </div>
-                </div>
+                {showThankYou ? (
+                  <>
+                    <StyledThankyou>
+                      <h1>Thank you for your request!</h1>
+                      <p>Your request has been submitted.</p>
+                    </StyledThankyou>
+                  </>
+                ) : (
+                  <>
+                    <h1>Request recipe</h1>
+                    <div>
+                      <div>
+                        <h3>Name</h3>
+                        <StyledInput
+                          type="text"
+                          name="author"
+                          value={reqForm.author}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <div>
+                        <h3>Request message</h3>
+                        <StyledTextarea
+                          rows="4"
+                          name="message"
+                          value={reqForm.message}
+                          onChange={handleInputChange}
+                        ></StyledTextarea>
+                      </div>
+                    </div>
+                    {/* link to view */}
+                    <ViewReq />
+                  </>
+                )}
               </div>
 
               <StyledButtonArea>
-                <StyledButton onClick={() => sendRequest().then(() => close())}>
-                  Submit
-                </StyledButton>
-                <StyledButtonCancel onClick={() => close()}>
-                  Close
-                </StyledButtonCancel>
+                {showThankYou ? (
+                  <StyledButtonCancel onClick={() => setShowThankYou(false)}>
+                    <i class="fa-solid fa-chevron-left"></i> Go Back
+                  </StyledButtonCancel>
+                ) : (
+                  <>
+                    <StyledButton onClick={() => sendRequest()}>
+                      Submit
+                    </StyledButton>
+                    <StyledButtonCancel onClick={() => close()}>
+                      Close
+                    </StyledButtonCancel>
+                  </>
+                )}
               </StyledButtonArea>
             </div>
           )}
@@ -213,4 +255,13 @@ const StyledButtonArea = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+`;
+
+const StyledThankyou = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #e23c34;
 `;

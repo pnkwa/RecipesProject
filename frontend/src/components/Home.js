@@ -6,7 +6,7 @@ import LevelSelector from "./LevelSelector";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import axios from "axios";
-import EndBanner from "./EndBanner"
+import EndBanner from "./EndBanner/EndBanner";
 
 function Home({ className }) {
   const [data, setData] = useState([]);

@@ -1,21 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-function Comment({ className }) {
+function Comment({ className, onCommentSubmit }) {
+  const [name, setName] = useState("");
+  const [comment, setComment] = useState("");
+
+  const handleCommentSubmit = () => {
+    // Call the submit function passed from the parent component
+    onCommentSubmit(name, comment);
+    setName("");
+    setComment("");
+  }
+
   return (
     <div className={className}>
       <div className="container_comment">
         <h2>Comment</h2>
         <div className="comment_box">
           <div className="typename">
-            <input type="text" placeholder="Type name..." />
+            <input
+              type="text"
+              placeholder="Type name..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div className="typecomment">
-            <textarea placeholder="Type something...."></textarea>
+            <textarea
+              placeholder="Type something...."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            ></textarea>
           </div>
           <div className="button">
-            <button type="button">Post now</button>
+            <button onClick={handleCommentSubmit} type="button">
+              Post now
+            </button>
           </div>
         </div>
       </div>
@@ -25,6 +46,7 @@ function Comment({ className }) {
 
 Comment.propTypes = {
   className: PropTypes.string.isRequired,
+  onCommentSubmit: PropTypes.func.isRequired,
 };
 
 export default styled(Comment)`
@@ -64,10 +86,11 @@ export default styled(Comment)`
     flex: 1;
     border: 0;
     outline: none;
-    font-size: 15px;
+    font-size: medium;
     font-family: "Inter", sans-serif;
     color: #e23c34;
     padding-left: 20px;
+    resize: none;
   }
   .typename,
   .comment_box ::placeholder {

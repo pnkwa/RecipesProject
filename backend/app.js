@@ -26,4 +26,4 @@ app.listen(8000, () => {
 
 app.use("/recipes", recipesRoutes);
 app.use("/recipes", commentRoutes);
-app.use(requestRecipeRoutes);
+app.use("/recipes",requestRecipeRoutes);

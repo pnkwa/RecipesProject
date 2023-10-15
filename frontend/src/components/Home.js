@@ -6,8 +6,7 @@ import LevelSelector from "./LevelSelector";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import axios from "axios";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
+import EndBanner from "./EndBanner"
 
 function Home({ className }) {
   const [data, setData] = useState([]);
@@ -132,41 +131,8 @@ function Home({ className }) {
         </div>
       </div>
 
-      <div class="end_banner">
-        <h2>
-          "You've been trying to find a recipe, but you can't seem to find it in
-          Recipe Box? Tell us!"
-        </h2>
-        {/* <button type="submit">Request recipe</button> */}
-        <Popup
-          trigger={<button type="submit">Request recipe</button>}
-          modal
-          nested
-        >
-          {(close) => (
-            <div className="modal">
-              <div className="content">
-                <h1>Request recipe</h1>
-                <div>
-                  <div>
-                    <h3>Name</h3>
-                    <input type="text" />
-                  </div>
-                  <div>
-                    <h3>Request message</h3>
-                    <input type="text" />
-                  </div>
-                </div>
-              </div>
+      <EndBanner />
 
-              <div>
-                <button onClick={() => close()}>Submit</button>
-                <button onClick={() => close()}>Close</button>
-              </div>
-            </div>
-          )}
-        </Popup>
-      </div>
     </div>
   );
 }
@@ -311,37 +277,5 @@ export default styled(Home)`
     border-radius: 30px;
   }
 
-  .end_banner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 500px;
-    color: #e23c34;
-    border-bottom: 1px solid #e23c34;
-  }
-
-  .end_banner h2 {
-    width: 50%;
-  }
-
-  .end_banner button {
-    background-color: #e23c34;
-    border: 1px solid #e23c34;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 30px;
-    width: 150px;
-    color: #fff;
-    transition: 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-    font-size: medium;
-  }
-
-  .end_banner button:hover {
-    background-color: #fdee82;
-    border: 1px solid #e23c34;
-    color: #e23c34;
-  }
+  
 `;

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function NotFound({ className }) {
   return (
     <div className={className}>
-      <div class="NotFoundPage">
+      <div className="NotFoundPage">
         <h1>404 NOT FOUND</h1>
       </div>
     </div>

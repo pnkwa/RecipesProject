@@ -116,11 +116,11 @@ function Single({ className }) {
 
       <div className="recipe_details">
         <h2>How To : Step by step</h2>
-        <div className="video">
-          {recipeData.video != null && (
+        {recipeData.video && (
+          <div className="video">
             <YouTube videoId={getVideoIdFromURL(recipeData.video)} />
-          )}
-        </div>
+          </div>
+        )}
         <ol>
           {recipeData.steps.map((ingredient, index) => (
             <li key={index}>{ingredient}</li>

@@ -8,8 +8,6 @@ import axios from "axios";
 function Edit({ className }) {
   const { id } = useParams();
 
-  const [ingredients, setIngredients] = useState(["", "", ""]);
-  const [steps, setSteps] = useState(["", "", ""]);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -28,26 +26,39 @@ function Edit({ className }) {
 
   // Function to add a new ingredient field
   const handleAddIngredient = () => {
-    setIngredients([...ingredients, ""]);
+    setFormData((prevData) => ({
+      ...prevData,
+      ingredients: [...prevData.ingredients, ""],
+    }));
   };
-
   // Function to remove a ingredient
   const handleRemoveIngredient = () => {
-    const newIngredients = [...ingredients];
-    newIngredients.splice(newIngredients.length - 1, 1);
-    setIngredients(newIngredients);
+    setFormData((prevData) => {
+      const newIngredients = [...prevData.ingredients];
+      newIngredients.pop();
+      return {
+        ...prevData,
+        ingredients: newIngredients,
+      };
+    });
   };
-
   // Function to add a new step
   const handleAddStep = () => {
-    setSteps([...steps, ""]);
+    setFormData((prevData) => ({
+      ...prevData,
+      steps: [...prevData.steps, ""],
+    }));
   };
-
   // Function to remove a step
   const handleRemoveStep = () => {
-    const newSteps = [...steps];
-    newSteps.splice(newSteps.length - 1, 1);
-    setSteps(newSteps);
+    setFormData((prevData) => {
+      const newSteps = [...prevData.steps];
+      newSteps.pop();
+      return {
+        ...prevData,
+        steps: newSteps,
+      };
+    });
   };
 
   useEffect(() => {
@@ -255,23 +266,23 @@ function Edit({ className }) {
               different parts of the recipe.
             </p>
             <h3>Enter ingredients below</h3>
-            {ingredients.map((ingredient, index) => (
+            {formData.ingredients.map((ingredient, index) => (
               <div key={index} className="typeingre">
                 <input
                   type="text"
                   placeholder="e.g. 2 cups flour"
-                  value={formData.ingredients[index]}
+                  value={ingredient}
                   onChange={(e) => {
                     const newIngredients = [...formData.ingredients];
                     newIngredients[index] = e.target.value;
-                    setFormData({
-                      ...formData,
+                    setFormData((prevData) => ({
+                      ...prevData,
                       ingredients: newIngredients,
-                    });
+                    }));
                   }}
                 />
                 <i
-                  onClick={handleRemoveIngredient}
+                  onClick={() => handleRemoveIngredient()}
                   className="fa-solid fa-circle-minus"
                 ></i>
               </div>
@@ -290,23 +301,23 @@ function Edit({ className }) {
               parts of the recipe
             </p>
             <h3>Enter directions below</h3>
-            {steps.map((step, index) => (
+            {formData.steps.map((step, index) => (
               <div key={index} className="typedirec">
                 <p>Step {index + 1}</p>
                 <textarea
-                  value={formData.steps[index]}
+                  value={step}
                   onChange={(e) => {
                     const newSteps = [...formData.steps];
                     newSteps[index] = e.target.value;
-                    setFormData({
-                      ...formData,
+                    setFormData((prevData) => ({
+                      ...prevData,
                       steps: newSteps,
-                    });
+                    }));
                   }}
-                  placeholder="e.g. Reheat oven at 30 degrees F..."
+                  placeholder="e.g. Reheat oven at 350 degrees F..."
                 ></textarea>
                 <i
-                  onClick={handleRemoveStep}
+                  onClick={() => handleRemoveStep()}
                   className="fa-solid fa-circle-minus"
                 ></i>
               </div>

@@ -7,6 +7,7 @@ import axios from "axios";
 
 function Edit({ className }) {
   const { id } = useParams();
+
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -30,7 +31,6 @@ function Edit({ className }) {
       ingredients: [...prevData.ingredients, ""],
     }));
   };
-
   // Function to remove a ingredient
   const handleRemoveIngredient = () => {
     setFormData((prevData) => {
@@ -42,7 +42,6 @@ function Edit({ className }) {
       };
     });
   };
-
   // Function to add a new step
   const handleAddStep = () => {
     setFormData((prevData) => ({
@@ -50,7 +49,6 @@ function Edit({ className }) {
       steps: [...prevData.steps, ""],
     }));
   };
-
   // Function to remove a step
   const handleRemoveStep = () => {
     setFormData((prevData) => {
@@ -182,6 +180,8 @@ function Edit({ className }) {
       if (response.status === 200) {
         console.log("Recipe updated successfully:", response.data);
         setIsSuccess(true);
+        window.alert("Recipe Edited successfully!");
+        window.location.href = `/recipes/${id}`;
       } else {
         console.error(
           `Update failed: ${response.status} - ${response.statusText}`
@@ -197,10 +197,11 @@ function Edit({ className }) {
       <form onSubmit={handleSubmit}>
         <div className="container">
           <div className="top_name">
-            <h1>Add a Recipe</h1>
+            <h1>Edit a Recipe</h1>
             <p>
-              Uploading personal recipes is easy! Add yours to your favorites,
-              share with friends, family, or the Allrecipes community.
+              Editing a recipe allows you to personalize flavors and create
+              culinary masterpieces uniquely tailored to your taste, unlocking a
+              world of culinary creativity and satisfaction.
             </p>
           </div>
 
@@ -286,6 +287,7 @@ function Edit({ className }) {
                 ></i>
               </div>
             ))}
+
             <button type="button" onClick={handleAddIngredient}>
               +Add Ingredient
             </button>
@@ -336,7 +338,7 @@ function Edit({ className }) {
                   value={formData.prepTime}
                   onChange={handleChange}
                 />
-                <label for="preptime">min</label>
+                <label htmlFor="preptime">min</label>
               </div>
               <div className="selectBox">
                 <h2>Cook Time</h2>
@@ -347,13 +349,13 @@ function Edit({ className }) {
                   value={formData.cookTime}
                   onChange={handleChange}
                 />
-                <label for="cooktime">min</label>
+                <label htmlFor="cooktime">min</label>
               </div>
             </div>
 
             <div>
               <div className="selectBox">
-                <label for="level">
+                <label htmlFor="level">
                   <h2>Level</h2>
                 </label>
                 <select id="level" name="level">
@@ -363,7 +365,7 @@ function Edit({ className }) {
                 </select>
               </div>
               <div className="selectBox">
-                <label for="recipe-type">
+                <label htmlFor="recipe-type">
                   <h2>Type</h2>
                 </label>
 
@@ -398,7 +400,7 @@ function Edit({ className }) {
                 />
               </div>
               <div className="selectBox">
-                <label for="recipe-options">
+                <label htmlFor="recipe-options">
                   <h2>Options</h2>
                 </label>
                 <select
@@ -407,7 +409,7 @@ function Edit({ className }) {
                   value={formData.options}
                   onChange={handleChange}
                 >
-                  <option value="nonspicy">Non-Spicy</option>
+                  <option value="non-spicy">Non-Spicy</option>
                   <option value="spicy">Spicy</option>
                   <option value="vegetarian">Vegetarian</option>
                   <option value="vegan">Vegan</option>
@@ -428,7 +430,7 @@ function Edit({ className }) {
           </div>
 
           <div className="section_6">
-            <Link to={"/"}>
+            <Link to={`/recipes/${id}`}>
               <button className="cancel-button" type="button">
                 Cancel {/* Use type="reset" to reset the form */}
               </button>
@@ -439,9 +441,9 @@ function Edit({ className }) {
           </div>
         </div>
       </form>
-      {isSuccess && (
+      {/* {isSuccess && (
         <div className="success-message">Recipe Edited successfully!</div>
-      )}
+      )} */}
     </div>
   );
 }
@@ -595,6 +597,7 @@ export default styled(Edit)`
     outline: none;
     resize: none;
     background-color: #fff;
+    font-family: "Inter", sans-serif;
   }
 
   .container .section_3 textarea::placeholder {

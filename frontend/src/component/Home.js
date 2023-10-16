@@ -4,6 +4,7 @@ import Banner from "./Banner";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import axios from "axios";
+import EndBanner from "./EndBanner/EndBanner";
 
 function Home({ className }) {
 
@@ -273,13 +274,8 @@ function Home({ className }) {
         </div>
       </div>
 
-      <div className="end_banner">
-        <h2>
-          "You've been trying to find a recipe, but you can't seem to find it in
-          Recipe Box? Tell us!"
-        </h2>
-        <button type="submit">Request recipe</button>
-      </div>
+      <EndBanner />
+
     </div>
   );
 }
@@ -423,40 +419,6 @@ export default styled(Home)`
     background-color: #fdee82;
     border: 1px solid #e23c34;
     border-radius: 30px;
-  }
-
-  .end_banner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 500px;
-    color: #e23c34;
-    border-bottom: 1px solid #e23c34;
-  }
-
-  .end_banner h2 {
-    width: 50%;
-  }
-
-  .end_banner button {
-    background-color: #e23c34;
-    border: 1px solid #e23c34;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 30px;
-    width: 150px;
-    color: #fff;
-    transition: 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-    font-size: medium;
-  }
-
-  .end_banner button:hover {
-    background-color: #fdee82;
-    border: 1px solid #e23c34;
-    color: #e23c34;
   }
 
   .time {

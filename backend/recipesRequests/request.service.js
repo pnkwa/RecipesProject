@@ -1,7 +1,7 @@
 // Get all recipes requests
 async function findAllReq(req, res) {
   try {
-    const reqRecipes = await RequestRecipe.findAll(); // Use the RequestRecipe model
+    const reqRecipes = await Requests.findAll(); // Use the RequestRecipe model
     res.json(reqRecipes);
   } catch (err) {
     console.error(err);
@@ -13,7 +13,7 @@ async function findAllReq(req, res) {
 async function createReq(req, res) {
   try {
     const { author, message } = req.body;
-    const newRequest = await RequestRecipe.create({
+    const newRequest = await Requests.create({
       author,
       message,
     });
@@ -25,7 +25,7 @@ async function createReq(req, res) {
 
 async function deleteAllReq(req, res) {
   try {
-    await RequestRecipe.destroy({
+    await Requests.destroy({
       where: {},
       truncate: true,
     });

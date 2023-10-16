@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const RequestRecipe = require("./request.model");
+const Requests = require("./request.model");
 const { findAllReq, createReq, deleteAllReq } = require("./request.service");
 
 // Get all recipes requests

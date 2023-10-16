@@ -3,7 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const recipesRoutes = require("./recipes/recipes.controller");
 const commentRoutes = require("./comments/comments.controller");
-const requestRecipeRoutes = require("./recipesRequest/request.controller");
+const requestRecipeRoutes = require("./recipesRequests/request.controller");
 const { connect, sync } = require("./config/dbRecipes");
 const cors = require("cors");
 

@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbRecipes");
 
-RequestRecipe = sequelize.define("RequestRecipe", {
+Requests = sequelize.define("Requests", {
     author: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -12,4 +12,4 @@ RequestRecipe = sequelize.define("RequestRecipe", {
     }
 })
 
-module.exports = RequestRecipe;
+module.exports = Requests;

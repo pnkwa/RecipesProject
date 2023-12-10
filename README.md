@@ -1,9 +1,9 @@
 # RecipesProject
 
 # Can see each member's progress in each member's branch.
-# Kittipat Saiud 652110270 - LUGIE
-# Prapanit Pajeekum 652110292 -KWANJAI
-# Luca Gomis 652110300 - TAKAWA
+# Kittipat Saiud 652110270 - KWANJAI
+# Prapanit Pajeekum 652110292 - TAKAWA
+# Luca Gomis 652110300 - LUGIE
 
 ![search](https://github.com/pnkwa/RecipesProject/assets/118959975/e5c42f2c-c2e2-4d0d-ac19-74b353c8c2e0)
 ![request3](https://github.com/pnkwa/RecipesProject/assets/118959975/b41c694d-bb43-4459-a40c-0119e8b3d9e2)
